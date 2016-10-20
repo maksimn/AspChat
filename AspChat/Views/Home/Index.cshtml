@@ -1,19 +1,33 @@
-﻿<h2>Абдулов и Ермольник -- самые лучшие актёры.</h2>
-<input type="text" id="user" />
+﻿@model AspChat.Models.ChatRoom
+
+<h4>В комнате сейчас @Model.ChatUsers.Count пользователей</h4>
+
+<div>Напишите сообщение в чат:</div>
 <input type="text" id="message" />
 <input type="button" value="send" id="send" />
-<div id='messages'></div>
 
-<script type="text/javascript">
+<div id='messages'>    
+</div>
+
+<script>
+    // возвращает cookie с именем name, если есть, если нет, то undefined
+    function getCookie(name) {
+        var matches = document.cookie.match(new RegExp(
+          "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+
+    console.log("cookie value: ", getCookie('id'));
+
     var socket,
         $txt = document.getElementById('message'),
-        $user = document.getElementById('user'),
         $messages = document.getElementById('messages');
 
     if (typeof (WebSocket) !== 'undefined') {
         socket = new WebSocket("ws://simplersvpapp.com/ChatHandler.ashx");
     } else {
-        alert("Сокеты здесь не работают!!1111!");
+        alert("Связь здесь не работает!");
     }
 
     socket.onmessage = function (msg) {
@@ -27,7 +41,7 @@
     };
 
     document.getElementById('send').onclick = function () {
-        socket.send($user.value + ' : ' + $txt.value);
+        socket.send('[Здесь имя юзера] : ' + $txt.value);
         $txt.value = '';
     };
 </script>

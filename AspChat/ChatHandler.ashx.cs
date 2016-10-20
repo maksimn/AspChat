@@ -9,6 +9,7 @@ using System.Web.WebSockets;
 namespace AspChat {
     public class ChatHandler : IHttpHandler {
         // Список всех клиентов
+        // WebSocket -- класс, позволяющий отправлять и получать данные по сети
         private static readonly List<WebSocket> Clients = new List<WebSocket>();
 
         // Блокировка для обеспечения потокобезопасности
@@ -41,7 +42,7 @@ namespace AspChat {
                 var buffer = new ArraySegment<byte>(new byte[1024]);
 
                 // Ожидаем данные от него
-                var result = await socket.ReceiveAsync(buffer, CancellationToken.None);
+                await socket.ReceiveAsync(buffer, CancellationToken.None);
 
 
                 //Передаём сообщение всем клиентам
