@@ -86,13 +86,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="ChatHandler.ashx.cs">
+      <DependentUpon>ChatHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -106,6 +111,8 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="ChatHandler.ashx" />
+    <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
