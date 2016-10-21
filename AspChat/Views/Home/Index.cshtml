@@ -1,6 +1,8 @@
 ﻿@model AspChat.Models.ChatRoom
 
-<h4>В комнате сейчас @Model.ChatUsers.Count пользователей</h4>
+@{ var userName = @Model.ThisUser.Name; }
+
+<h4>Вы вошли как @userName</h4>
 
 <div>Напишите сообщение в чат:</div>
 <input type="text" id="message" />
@@ -10,16 +12,6 @@
 </div>
 
 <script>
-    // возвращает cookie с именем name, если есть, если нет, то undefined
-    function getCookie(name) {
-        var matches = document.cookie.match(new RegExp(
-          "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-        ));
-        return matches ? decodeURIComponent(matches[1]) : undefined;
-    }
-
-    console.log("cookie value: ", getCookie('id'));
-
     var socket,
         $txt = document.getElementById('message'),
         $messages = document.getElementById('messages');
@@ -37,11 +29,11 @@
     };
 
     socket.onclose = function (event) {
-        alert('Мы потеряли её. Пожалуйста, обновите страницу');
+        alert('Связь не работает. Пожалуйста, обновите страницу');
     };
 
     document.getElementById('send').onclick = function () {
-        socket.send('[Здесь имя юзера] : ' + $txt.value);
+        socket.send('@userName : ' + $txt.value);
         $txt.value = '';
     };
 </script>

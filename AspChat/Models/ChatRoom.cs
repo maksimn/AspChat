@@ -8,6 +8,7 @@ namespace AspChat.Models {
             ChatMessages = new List<ChatMessage>();
         }
 
+        public ChatUser ThisUser { get; set; }
         public List<ChatUser> ChatUsers { get; set; }
         public List<ChatMessage> ChatMessages { get; set; }
 

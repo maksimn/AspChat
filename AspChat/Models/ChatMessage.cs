@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace AspChat.Models {
+﻿namespace AspChat.Models {
     public class ChatMessage {
-        private ChatUser _chatUser;
-        private string _text;
+        private readonly ChatUser _chatUser;
+        private readonly string _text;
 
-        public ChatMessage(ChatUser chatUser, String text) {
+        public ChatMessage(ChatUser chatUser, string text) {
             _chatUser = chatUser;
             _text = text;
         }
