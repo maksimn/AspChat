@@ -107,6 +107,7 @@
     <Compile Include="Models\ChatUser.cs" />
     <Compile Include="Models\ChatViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ChatMessageService.cs" />
     <Compile Include="Services\HomeService.cs" />
     <Compile Include="Services\IHomeService.cs" />
   </ItemGroup>
