@@ -9,7 +9,7 @@ using AspChat.Models;
 
 namespace AspChat {
     public class ChatHandler : IHttpHandler {
-        private int MSG_BUFFER_SIZE = 1024;
+        private int MSG_BUFFER_SIZE = 1000;
         // Список всех клиентов
         // WebSocket -- класс, позволяющий отправлять и получать данные по сети
         private static readonly List<WebSocket> Clients = new List<WebSocket>();
@@ -46,15 +46,9 @@ namespace AspChat {
                 // Ожидаем данные от него
                 await socket.ReceiveAsync(buffer, CancellationToken.None);
                 // Перекодируем результат в строку
-                string result = System.Text.Encoding.UTF8.GetString(buffer.Array);
-                result = result.Substring(0, result.IndexOf('\0'));
+                string result = BufferMsgToString(buffer);
                 // Строку нужно распарсить и добавить в ChatRoom.ChatMessages
-                int delimInd = result.IndexOf(':');
-                string userName = result.Substring(0, delimInd);
-                string message = result.Substring(delimInd + 2);
-
-                ChatUser user = ChatRoom.ChatUsers.Find((chUsr) => chUsr.Name == userName);
-                ChatRoom.ChatMessages.Add(new ChatMessage(user, message));
+                AddReceivedMsgToChatRoom(result);
 
                 //Передаём сообщение всем клиентам
                 for (int i = 0; i < Clients.Count; i++) {
@@ -75,8 +69,22 @@ namespace AspChat {
                         }
                     }
                 }
-
             }
+        }
+
+        private String BufferMsgToString(ArraySegment<byte> buffer) {
+            string result = System.Text.Encoding.UTF8.GetString(buffer.Array);
+            return result.Substring(0, result.IndexOf('\0'));
+        }
+
+        private void AddReceivedMsgToChatRoom(string str) {
+            int delimInd = str.IndexOf(':');
+            int msgShift = 2;
+            string userName = str.Substring(0, delimInd);
+            string message = str.Substring(delimInd + msgShift);
+
+            ChatUser user = ChatRoom.ChatUsers.Find(chUsr => chUsr.Name == userName);
+            ChatRoom.ChatMessages.Add(new ChatMessage(user, message));
         }
     }
 }
