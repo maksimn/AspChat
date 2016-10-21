@@ -1,4 +1,4 @@
-﻿@model AspChat.Models.ChatRoom
+﻿@model AspChat.Models.ChatViewModel
 
 @{ var userName = @Model.ThisUser.Name; }
 
@@ -8,7 +8,10 @@
 <input type="text" id="message" />
 <input type="button" value="send" id="send" />
 
-<div id='messages'>    
+<div id='messages'>
+    @foreach (var msg in @Model.ChatMessages) {
+        <p>@msg.ChatUser.Name: @msg.Text</p>
+    }
 </div>
 
 <script>
@@ -28,12 +31,12 @@
         $messages.appendChild($el);
     };
 
-    socket.onclose = function (event) {
+    socket.onclose = function () {
         alert('Связь не работает. Пожалуйста, обновите страницу');
     };
 
     document.getElementById('send').onclick = function () {
-        socket.send('@userName : ' + $txt.value);
+        socket.send('@userName: ' + $txt.value);
         $txt.value = '';
     };
 </script>
