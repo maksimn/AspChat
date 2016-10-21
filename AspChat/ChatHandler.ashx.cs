@@ -48,13 +48,13 @@ namespace AspChat {
                 // Перекодируем результат в строку
                 string result = System.Text.Encoding.UTF8.GetString(buffer.Array);
                 result = result.Substring(0, result.IndexOf('\0'));
-                // Строку нужно распарсить и добавить в ChatRepository.ChatMessages
+                // Строку нужно распарсить и добавить в ChatRoom.ChatMessages
                 int delimInd = result.IndexOf(':');
                 string userName = result.Substring(0, delimInd);
                 string message = result.Substring(delimInd + 2);
 
-                ChatUser user = ChatRepository.ChatUsers.Find((chUsr) => chUsr.Name == userName);
-                ChatRepository.ChatMessages.Add(new ChatMessage(user, message));
+                ChatUser user = ChatRoom.ChatUsers.Find((chUsr) => chUsr.Name == userName);
+                ChatRoom.ChatMessages.Add(new ChatMessage(user, message));
 
                 //Передаём сообщение всем клиентам
                 for (int i = 0; i < Clients.Count; i++) {

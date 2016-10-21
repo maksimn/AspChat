@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
 namespace AspChat.Models {
-    public static class ChatRepository {
-        static ChatRepository() {
+    public static class ChatRoom {
+        static ChatRoom() {
             ChatUsers = new List<ChatUser>();
             ChatMessages = new List<ChatMessage>();
         }

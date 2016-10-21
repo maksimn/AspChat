@@ -8,23 +8,23 @@ namespace AspChat.Controllers {
         public ActionResult Index() {
             // Если это самый первый запрос от самого первого пользователя приложения
             ChatViewModel viewModel;
-            if (ChatRepository.NumChatUsers == 0) {
+            if (ChatRoom.NumChatUsers == 0) {
                 var newUser = new ChatUser(0, "Гость1");
-                ChatRepository.ChatUsers.Add(newUser);
-                viewModel = new ChatViewModel(newUser, ChatRepository.ChatMessages);
+                ChatRoom.ChatUsers.Add(newUser);
+                viewModel = new ChatViewModel(newUser, ChatRoom.ChatMessages);
                 CreateCookieForId(newUser.Id);
             }
             // Если это первый запрос для нового пользователя
             else if (HttpContext.Request.Cookies["id"] == null) { 
-                var nextUserId = ChatRepository.NumChatUsers;
-                ChatRepository.ChatUsers.Add(new ChatUser(nextUserId, "Гость" + (nextUserId + 1)));
-                viewModel = new ChatViewModel(ChatRepository.ChatUsers[nextUserId], ChatRepository.ChatMessages);
+                var nextUserId = ChatRoom.NumChatUsers;
+                ChatRoom.ChatUsers.Add(new ChatUser(nextUserId, "Гость" + (nextUserId + 1)));
+                viewModel = new ChatViewModel(ChatRoom.ChatUsers[nextUserId], ChatRoom.ChatMessages);
                 CreateCookieForId(nextUserId);
             }
             // Если это запрос от уже делавшего запросы пользователя
             else {
                 var id = GetUserIdFromCookie();
-                viewModel = new ChatViewModel(ChatRepository.ChatUsers[id], ChatRepository.ChatMessages);
+                viewModel = new ChatViewModel(ChatRoom.ChatUsers[id], ChatRoom.ChatMessages);
             }
             return View(viewModel);
         }
