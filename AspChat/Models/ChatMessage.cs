@@ -1,15 +1,15 @@
 ﻿namespace AspChat.Models {
     public class ChatMessage {
-        private readonly ChatUser _chatUser;
+        private readonly string _chatUserName;
         private readonly string _text;
 
-        public ChatMessage(ChatUser chatUser, string text) {
-            _chatUser = chatUser;
+        public ChatMessage(string chatUser, string text) {
+            _chatUserName = chatUser;
             _text = text;
         }
 
-        public ChatUser ChatUser {
-            get { return _chatUser; }
+        public string ChatUserName {
+            get { return _chatUserName; }
         }
 
         public string Text {

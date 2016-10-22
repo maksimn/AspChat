@@ -71,9 +71,7 @@ namespace AspChat.Services {
             int msgShift = 2;
             string userName = str.Substring(0, delimInd);
             string message = str.Substring(delimInd + msgShift);
-
-            ChatUser user = ChatRoom.ChatUsers.Find(chUsr => chUsr.Name == userName);
-            ChatRoom.ChatMessages.Add(new ChatMessage(user, message));
+            ChatRoom.ChatMessages.Add(new ChatMessage(userName, message));
         }
     }
 }
