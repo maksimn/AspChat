@@ -2,7 +2,7 @@
 
 namespace AspChat.Models {
     public class ChatUser {
-        private int _id;
+        private readonly int _id;
         private String _name;
 
         public ChatUser(int id, String name) {

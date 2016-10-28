@@ -20,9 +20,13 @@
         $messages = document.getElementById('messages');
 
     if (typeof (WebSocket) !== 'undefined') {
-        socket = new WebSocket("ws://simplersvpapp.com/ChatHandler.ashx");
+        var host = window.location.host;
+        var serverChatHandler = "ChatHandler.ashx";
+        var wsProtocol = "ws://";
+        var wsUrl = wsProtocol + host + "/" + serverChatHandler;
+        socket = new WebSocket(wsUrl);
     } else {
-        alert("Связь здесь не работает!");
+        alert("Связь через сокеты сейчас не работает.");
     }
 
     socket.onmessage = function (msg) {

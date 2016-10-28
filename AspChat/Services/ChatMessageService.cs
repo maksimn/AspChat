@@ -8,7 +8,7 @@ using AspChat.Models;
 
 namespace AspChat.Services {
     public class ChatMessagesService {
-        private int MSG_BUFFER_SIZE = 1000;
+        private const int MsgBufferSize = 1000;
         // Список всех клиентов
         // WebSocket -- класс, позволяющий отправлять и получать данные по сети
         private static readonly List<WebSocket> Clients = new List<WebSocket>();
@@ -30,14 +30,20 @@ namespace AspChat.Services {
 
             // Слушаем его
             while (true) {
-                var buffer = new ArraySegment<byte>(new byte[MSG_BUFFER_SIZE]);
+                var buffer = new ArraySegment<byte>(new byte[MsgBufferSize]);
 
                 // Ожидаем данные от него
                 await socket.ReceiveAsync(buffer, CancellationToken.None);
-                // Перекодируем результат в строку
-                string result = BufferMsgToString(buffer);
-                // Строку нужно распарсить и добавить в ChatRoom.ChatMessages
-                AddReceivedMsgToChatRoom(result);
+                
+                Locker.EnterWriteLock();
+                try {
+                    // Перекодируем результат в строку
+                    string result = BufferMsgToString(buffer);
+                    // Строку нужно распарсить и добавить в ChatRoom.ChatMessages
+                    AddReceivedMsgToChatRoom(result);
+                } finally {
+                    Locker.ExitWriteLock();
+                }
 
                 //Передаём сообщение всем клиентам
                 for (int i = 0; i < Clients.Count; i++) {
