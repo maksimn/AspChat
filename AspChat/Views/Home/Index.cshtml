@@ -1,46 +1,62 @@
-﻿@model AspChat.Models.ChatViewModel
+﻿@{ 
+    Layout = null;
+}
 
-@{ var userName = @Model.ThisUser.Name; }
+@model AspChat.Models.ChatViewModel
 
-<h4>Вы вошли как @userName</h4>
+@{
+    var userName = @Model.ThisUser.Name;
+}
 
-<div>Напишите сообщение в чат:</div>
-<input type="text" id="message" />
-<input type="button" value="send" id="send" />
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+</head>
+<body>
+    <h4>Вы вошли как @userName</h4>
 
-<div id='messages'>
-    @foreach (var msg in @Model.ChatMessages) {
-        <p>@msg.ChatUserName: @msg.Text</p>
-    }
-</div>
+    <div>Напишите сообщение в чат:</div>
+    <input type="text" id="message" />
+    <input type="button" value="send" id="send" />
 
-<script>
-    var socket,
-        $txt = document.getElementById('message'),
-        $messages = document.getElementById('messages');
+    <div id='messages'>
+        @foreach (var msg in @Model.ChatMessages) {
+            <p>@msg.ChatUserName: @msg.Text</p>
+        }
+    </div>
 
-    if (typeof (WebSocket) !== 'undefined') {
-        var host = window.location.host;
-        var serverChatHandler = "ChatHandler.ashx";
-        var wsProtocol = "ws://";
-        var wsUrl = wsProtocol + host + "/" + serverChatHandler;
-        socket = new WebSocket(wsUrl);
-    } else {
-        alert("Связь через сокеты сейчас не работает.");
-    }
+    <script>
+        var socket,
+            $txt = document.getElementById('message'),
+            $messages = document.getElementById('messages');
 
-    socket.onmessage = function (msg) {
-        var $el = document.createElement('p');
-        $el.innerHTML = msg.data;
-        $messages.appendChild($el);
-    };
+        if (typeof (WebSocket) !== 'undefined') {
+            var host = window.location.host;
+            var serverChatHandler = "ChatHandler.ashx";
+            var wsProtocol = "ws://";
+            var wsUrl = wsProtocol + host + "/" + serverChatHandler;
+            socket = new WebSocket(wsUrl);
+        } else {
+            alert("Связь через сокеты сейчас не работает.");
+        }
 
-    socket.onclose = function () {
-        alert('Связь не работает. Пожалуйста, обновите страницу');
-    };
+        socket.onmessage = function (msg) {
+            var $el = document.createElement('p');
+            $el.innerHTML = msg.data;
+            $messages.appendChild($el);
+        };
 
-    document.getElementById('send').onclick = function () {
-        socket.send('@userName: ' + $txt.value);
-        $txt.value = '';
-    };
-</script>
+        socket.onclose = function () {
+            alert('Связь не работает. Пожалуйста, обновите страницу');
+        };
+
+        document.getElementById('send').onclick = function () {
+            socket.send('@userName: ' + $txt.value);
+            $txt.value = '';
+        };
+    </script>
+</body>
+</html>
