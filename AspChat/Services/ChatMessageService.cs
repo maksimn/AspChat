@@ -7,7 +7,7 @@ using System.Web.WebSockets;
 using AspChat.Models;
 
 namespace AspChat.Services {
-    public class ChatMessagesService {
+    public class ChatMessagesService : IChatMessageService {
         private const int MsgBufferSize = 1000;
         // Список всех клиентов
         // WebSocket -- класс, позволяющий отправлять и получать данные по сети
