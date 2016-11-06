@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using AspChat.Models;
 
-namespace AspChat.Models {
+namespace AspChat.ChatData {
     public static class InMemoryChatRepository {
         static InMemoryChatRepository() {
             ChatUsers = new List<ChatUser>();
