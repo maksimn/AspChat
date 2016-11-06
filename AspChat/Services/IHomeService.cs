@@ -1,4 +1,4 @@
-﻿using AspChat.Models;
+﻿using AspChat.ViewModels;
 
 namespace AspChat.Services {
     public interface IHomeService {

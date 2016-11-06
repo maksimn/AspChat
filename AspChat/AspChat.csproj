@@ -93,6 +93,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="ChatData\IChatData.cs" />
+    <Compile Include="ChatData\StaticChatData.cs" />
     <Compile Include="ChatHandler.ashx.cs">
       <DependentUpon>ChatHandler.ashx</DependentUpon>
     </Compile>
@@ -101,9 +103,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ChatMessage.cs" />
-    <Compile Include="Models\ChatRoom.cs" />
+    <Compile Include="ChatData\InMemoryChatRepository.cs" />
     <Compile Include="Models\ChatUser.cs" />
-    <Compile Include="Models\ChatViewModel.cs" />
+    <Compile Include="ViewModels\ChatViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ChatMessageService.cs" />
     <Compile Include="Services\HomeService.cs" />

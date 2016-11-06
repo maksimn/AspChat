@@ -4,6 +4,7 @@ using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.WebSockets;
+using AspChat.ChatData;
 using AspChat.Models;
 
 namespace AspChat.Services {
@@ -15,6 +16,8 @@ namespace AspChat.Services {
 
         // Блокировка для обеспечения потокобезопасности
         private static readonly ReaderWriterLockSlim Locker = new ReaderWriterLockSlim();
+
+        private readonly IChatData chatStorage = new StaticChatData();
 
         public async Task WebSocketRequest(AspNetWebSocketContext context) {
             // Получаем сокет клиента из контекста запроса
@@ -39,7 +42,7 @@ namespace AspChat.Services {
                 try {
                     // Перекодируем результат в строку
                     string result = BufferMsgToString(buffer);
-                    // Строку нужно распарсить и добавить в ChatRoom.ChatMessages
+
                     AddReceivedMsgToChatRoom(result);
                 } finally {
                     Locker.ExitWriteLock();
@@ -77,7 +80,7 @@ namespace AspChat.Services {
             int msgShift = 2;
             string userName = str.Substring(0, delimInd);
             string message = str.Substring(delimInd + msgShift);
-            ChatRoom.ChatMessages.Add(new ChatMessage(userName, message));
+            chatStorage.AddChatMessage(new ChatMessage(userName, message));
         }
     }
 }
