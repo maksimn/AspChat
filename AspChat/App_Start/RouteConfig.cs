@@ -13,8 +13,7 @@ namespace AspChat {
 
     class ChatRouteHandler : IRouteHandler {
         public IHttpHandler GetHttpHandler(RequestContext requestContext) {
-            var url = requestContext.HttpContext.Request.Url != null ? 
-                      requestContext.HttpContext.Request.Url : null;
+            var url = requestContext.HttpContext.Request.Url != null ? requestContext.HttpContext.Request.Url : null;
             if (url != null && url.AbsolutePath.Length == 1) {
                 requestContext.RouteData.Values["controller"] = "home";
                 requestContext.RouteData.Values["action"] = "index";                

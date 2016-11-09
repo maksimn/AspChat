@@ -29,34 +29,41 @@
     </div>
 
     <script>
-        var socket,
-            $txt = document.getElementById('message'),
-            $messages = document.getElementById('messages');
-
-        if (typeof (WebSocket) !== 'undefined') {
+        try {
+            var $txt = document.getElementById('message'),
+                $messages = document.getElementById('messages');
             var host = window.location.host;
             var serverChatHandler = "ChatHandler.ashx";
             var wsProtocol = "ws://";
             var wsUrl = wsProtocol + host + "/" + serverChatHandler;
-            socket = new WebSocket(wsUrl);
-        } else {
+            var socket = new WebSocket(wsUrl);
+
+            socket.onmessage = function (msg) {                
+                var trimChatMessage = msg.data.replace(/\0/g, '');
+                var chatMsgObj = JSON.parse(trimChatMessage);
+
+                var $el = document.createElement('p');
+                $el.innerHTML = chatMsgObj.ChatUserName + ": " + chatMsgObj.Text;
+                $messages.appendChild($el);
+            };
+
+            socket.onclose = function () {
+                alert('Связь не работает. Пожалуйста, обновите страницу');
+            };
+
+            document.getElementById('send').onclick = function () {
+                var chatMessage = {
+                    ChatUserName: '@userName',
+                    Text: $txt.value
+                };
+                var jsonChatMessage = JSON.stringify(chatMessage);
+                socket.send(jsonChatMessage);
+                $txt.value = '';
+            };
+        } catch (error) {
             alert("Связь через сокеты сейчас не работает.");
         }
-
-        socket.onmessage = function (msg) {
-            var $el = document.createElement('p');
-            $el.innerHTML = msg.data;
-            $messages.appendChild($el);
-        };
-
-        socket.onclose = function () {
-            alert('Связь не работает. Пожалуйста, обновите страницу');
-        };
-
-        document.getElementById('send').onclick = function () {
-            socket.send('@userName: ' + $txt.value);
-            $txt.value = '';
-        };
     </script>
+
 </body>
 </html>

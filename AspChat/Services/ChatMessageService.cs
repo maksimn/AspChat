@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web.WebSockets;
 using AspChat.ChatData;
 using AspChat.Models;
+using Newtonsoft.Json;
 
 namespace AspChat.Services {
     public class ChatMessagesService : IChatMessageService {
@@ -17,7 +18,7 @@ namespace AspChat.Services {
         // Блокировка для обеспечения потокобезопасности
         private static readonly ReaderWriterLockSlim Locker = new ReaderWriterLockSlim();
 
-        private readonly IChatData chatStorage = new StaticChatData();
+        private readonly IChatData _chatStorage = new StaticChatData();
 
         public async Task WebSocketRequest(AspNetWebSocketContext context) {
             // Получаем сокет клиента из контекста запроса
@@ -71,16 +72,12 @@ namespace AspChat.Services {
         }
 
         private String BufferMsgToString(ArraySegment<byte> buffer) {
-            string result = System.Text.Encoding.UTF8.GetString(buffer.Array);
-            return result.Substring(0, result.IndexOf('\0'));
+            return System.Text.Encoding.UTF8.GetString(buffer.Array);
         }
 
         private void AddReceivedMsgToChatRoom(string str) {
-            int delimInd = str.IndexOf(':');
-            int msgShift = 2;
-            string userName = str.Substring(0, delimInd);
-            string message = str.Substring(delimInd + msgShift);
-            chatStorage.AddChatMessage(new ChatMessage(userName, message));
+            var chatMessage = JsonConvert.DeserializeObject<ChatMessage>(str);
+            _chatStorage.AddChatMessage(chatMessage);
         }
     }
 }
