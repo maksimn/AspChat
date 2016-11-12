@@ -1,8 +1,4 @@
-﻿@{ 
-    Layout = null;
-}
-
-@model AspChat.ViewModels.ChatViewModel
+﻿@model AspChat.ViewModels.ChatViewModel
 
 @{
     var userName = @Model.ThisUser.Name;
@@ -13,7 +9,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat</title>
+    <title>Чат</title>
 </head>
 <body>
     <h4>Вы вошли как @userName</h4>
@@ -31,12 +27,27 @@
     <script>
         try {
             var $txt = document.getElementById('message'),
-                $messages = document.getElementById('messages');
+                $messages = document.getElementById('messages'),
+                sendButton = document.getElementById('send');
+
             var host = window.location.host;
             var serverChatHandler = "ChatHandler.ashx";
             var wsProtocol = "ws://";
             var wsUrl = wsProtocol + host + "/" + serverChatHandler;
+
             var socket = new WebSocket(wsUrl);
+
+            socket.onopen = function() {
+                sendButton.onclick = function () {
+                    var chatMessage = {
+                        ChatUserName: '@userName',
+                        Text: $txt.value
+                    };
+                    var jsonChatMessage = JSON.stringify(chatMessage);
+                    socket.send(jsonChatMessage);
+                    $txt.value = '';
+                };
+            }
 
             socket.onmessage = function (msg) {                
                 var trimChatMessage = msg.data.replace(/\0/g, '');
@@ -47,19 +58,14 @@
                 $messages.appendChild($el);
             };
 
-            socket.onclose = function () {
-                alert('Связь не работает. Пожалуйста, обновите страницу');
+            socket.onclose = function() {
+                alert('Соединение закрыто.');
+            }
+
+            socket.onerror = function () {
+                alert('Произошла ошибка соединения с чатом.');
             };
 
-            document.getElementById('send').onclick = function () {
-                var chatMessage = {
-                    ChatUserName: '@userName',
-                    Text: $txt.value
-                };
-                var jsonChatMessage = JSON.stringify(chatMessage);
-                socket.send(jsonChatMessage);
-                $txt.value = '';
-            };
         } catch (error) {
             alert("Связь через сокеты сейчас не работает.");
         }

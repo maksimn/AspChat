@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.WebSockets;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.WebSockets;
@@ -10,13 +11,11 @@ using Newtonsoft.Json;
 
 namespace AspChat.Services {
     public class ChatMessagesService : IChatMessageService {
-        private const int MsgBufferSize = 1000;
-        // Список всех клиентов
-        // WebSocket -- класс, позволяющий отправлять и получать данные по сети
-        private static readonly List<WebSocket> Clients = new List<WebSocket>();
+        // Список всех сокетов-клиентов
+        private static readonly List<WebSocket> WsClients = new List<WebSocket>();
 
         // Блокировка для обеспечения потокобезопасности
-        private static readonly ReaderWriterLockSlim Locker = new ReaderWriterLockSlim();
+        private static readonly ReaderWriterLockSlim Lock = new ReaderWriterLockSlim();
 
         private readonly IChatData _chatStorage = new StaticChatData();
 
@@ -25,59 +24,52 @@ namespace AspChat.Services {
             var socket = context.WebSocket;
 
             // Добавляем его в список клиентов
-            Locker.EnterWriteLock();
+            Lock.EnterWriteLock();
             try {
-                Clients.Add(socket);
+                WsClients.Add(socket);
             } finally {
-                Locker.ExitWriteLock();
+                Lock.ExitWriteLock();
             }
 
+            const int msgBufferSize = 1000;
             // Слушаем его
-            while (true) {
-                var buffer = new ArraySegment<byte>(new byte[MsgBufferSize]);
+            while (socket.State == WebSocketState.Open) {
+                
+                var receiveBuffer = new ArraySegment<byte>(new byte[msgBufferSize]);
 
                 // Ожидаем данные от него
-                await socket.ReceiveAsync(buffer, CancellationToken.None);
-                
-                Locker.EnterWriteLock();
+                WebSocketReceiveResult receiveResult = await socket.ReceiveAsync(receiveBuffer, CancellationToken.None);
+
+                string stringResult;
+                Lock.EnterWriteLock();
                 try {
                     // Перекодируем результат в строку
-                    string result = BufferMsgToString(buffer);
+                    stringResult = BufferMsgToString(receiveBuffer, receiveResult.Count);
 
-                    AddReceivedMsgToChatRoom(result);
+                    AddReceivedMsgToChatRoom(stringResult);
                 } finally {
-                    Locker.ExitWriteLock();
+                    Lock.ExitWriteLock();
                 }
 
                 //Передаём сообщение всем клиентам
-                for (int i = 0; i < Clients.Count; i++) {
-
-                    WebSocket client = Clients[i];
-
-                    try {
-                        if (client.State == WebSocketState.Open) {
-                            await client.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
-                        }
-                    } catch (ObjectDisposedException) {
-                        Locker.EnterWriteLock();
-                        try {
-                            Clients.Remove(client);
-                            i--;
-                        } finally {
-                            Locker.ExitWriteLock();
-                        }
+                foreach (var client in WsClients) {
+                    if (client.State == WebSocketState.Open) {
+                        var outputBuffer = new ArraySegment<byte>(Encoding.UTF8.GetBytes(stringResult));
+                        await client.SendAsync(outputBuffer, WebSocketMessageType.Text, true, CancellationToken.None);
                     }
                 }
             }
         }
 
-        private String BufferMsgToString(ArraySegment<byte> buffer) {
-            return System.Text.Encoding.UTF8.GetString(buffer.Array);
+        private string BufferMsgToString(ArraySegment<byte> buffer, int count) {
+            return Encoding.UTF8.GetString(buffer.Array, 0, count);
         }
 
         private void AddReceivedMsgToChatRoom(string str) {
             var chatMessage = JsonConvert.DeserializeObject<ChatMessage>(str);
-            _chatStorage.AddChatMessage(chatMessage);
+            if (chatMessage != null) {
+                _chatStorage.AddChatMessage(chatMessage);
+            }
         }
     }
 }
