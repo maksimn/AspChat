@@ -19,6 +19,8 @@ namespace AspChat.Services {
 
         private readonly IChatData _chatStorage = new StaticChatData();
 
+        private const int MsgBufferSize = 1000;
+
         public async Task WebSocketRequest(AspNetWebSocketContext context) {
             // Получаем сокет клиента из контекста запроса
             var socket = context.WebSocket;
@@ -31,25 +33,16 @@ namespace AspChat.Services {
                 Lock.ExitWriteLock();
             }
 
-            const int msgBufferSize = 1000;
             // Слушаем его
-            while (socket.State == WebSocketState.Open) {
-                
-                var receiveBuffer = new ArraySegment<byte>(new byte[msgBufferSize]);
+            while (socket.State == WebSocketState.Open) {               
+                var receiveBuffer = new ArraySegment<byte>(new byte[MsgBufferSize]);
 
                 // Ожидаем данные от него
                 WebSocketReceiveResult receiveResult = await socket.ReceiveAsync(receiveBuffer, CancellationToken.None);
 
-                string stringResult;
-                Lock.EnterWriteLock();
-                try {
-                    // Перекодируем результат в строку
-                    stringResult = BufferMsgToString(receiveBuffer, receiveResult.Count);
+                string stringResult = BufferMsgToString(receiveBuffer, receiveResult.Count);
 
-                    AddReceivedMsgToChatRoom(stringResult);
-                } finally {
-                    Lock.ExitWriteLock();
-                }
+                AddReceivedMsgToChatRoom(stringResult);
 
                 //Передаём сообщение всем клиентам
                 foreach (var client in WsClients) {
@@ -68,7 +61,12 @@ namespace AspChat.Services {
         private void AddReceivedMsgToChatRoom(string str) {
             var chatMessage = JsonConvert.DeserializeObject<ChatMessage>(str);
             if (chatMessage != null) {
-                _chatStorage.AddChatMessage(chatMessage);
+                Lock.EnterWriteLock();
+                try {
+                    _chatStorage.AddChatMessage(chatMessage);
+                } finally {
+                    Lock.ExitWriteLock();
+                }      
             }
         }
     }
