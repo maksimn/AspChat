@@ -45,12 +45,18 @@ namespace AspChat.Services {
                 AddReceivedMsgToChatRoom(stringResult);
 
                 //Передаём сообщение всем клиентам
-                foreach (var client in WsClients) {
-                    if (client.State == WebSocketState.Open) {
-                        var outputBuffer = new ArraySegment<byte>(Encoding.UTF8.GetBytes(stringResult));
-                        await client.SendAsync(outputBuffer, WebSocketMessageType.Text, true, CancellationToken.None);
+                Lock.EnterReadLock();
+                try {
+                    foreach (var client in WsClients) {
+                        if (client.State == WebSocketState.Open) {
+                            var outputBuffer = new ArraySegment<byte>(Encoding.UTF8.GetBytes(stringResult));
+                            await client.SendAsync(outputBuffer, WebSocketMessageType.Text, true, CancellationToken.None);
+                        }
                     }
                 }
+                finally {
+                    Lock.ExitReadLock();
+                }                
             }
         }
 
@@ -61,12 +67,7 @@ namespace AspChat.Services {
         private void AddReceivedMsgToChatRoom(string str) {
             var chatMessage = JsonConvert.DeserializeObject<ChatMessage>(str);
             if (chatMessage != null) {
-                Lock.EnterWriteLock();
-                try {
-                    _chatStorage.AddChatMessage(chatMessage);
-                } finally {
-                    Lock.ExitWriteLock();
-                }      
+                _chatStorage.AddChatMessage(chatMessage);    
             }
         }
     }
