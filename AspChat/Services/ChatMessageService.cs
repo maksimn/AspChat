@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
@@ -11,52 +10,31 @@ using Newtonsoft.Json;
 
 namespace AspChat.Services {
     public class ChatMessagesService : IChatMessageService {
-        // Список всех сокетов-клиентов
-        private static readonly List<WebSocket> WsClients = new List<WebSocket>();
-
-        // Блокировка для обеспечения потокобезопасности
-        private static readonly ReaderWriterLockSlim Lock = new ReaderWriterLockSlim();
-
         private readonly IChatData _chatStorage = new StaticChatData();
-
         private const int MsgBufferSize = 1000;
 
         public async Task WebSocketRequest(AspNetWebSocketContext context) {
             // Получаем сокет клиента из контекста запроса
             var socket = context.WebSocket;
 
-            // Добавляем его в список клиентов
-            Lock.EnterWriteLock();
-            try {
-                WsClients.Add(socket);
-            } finally {
-                Lock.ExitWriteLock();
-            }
+            var userId = GetUserIdFromCookie(context);
+            var chatUser = _chatStorage.GetChatUserById(userId);
+
+            WsConnectionManager.AddWsChatEntity(new WsChatEntity(socket, chatUser));
 
             // Слушаем его
             while (socket.State == WebSocketState.Open) {               
                 var receiveBuffer = new ArraySegment<byte>(new byte[MsgBufferSize]);
 
                 // Ожидаем данные от него
-                WebSocketReceiveResult receiveResult = await socket.ReceiveAsync(receiveBuffer, CancellationToken.None);
+                var receiveResult = await socket.ReceiveAsync(receiveBuffer, CancellationToken.None);
 
-                string stringResult = BufferMsgToString(receiveBuffer, receiveResult.Count);
+                var stringResult = BufferMsgToString(receiveBuffer, receiveResult.Count);
 
                 AddReceivedMsgToChatRoom(stringResult);
 
                 //Передаём сообщение всем клиентам
-                Lock.EnterReadLock();
-                try {
-                    foreach (var client in WsClients) {
-                        if (client.State == WebSocketState.Open) {
-                            var outputBuffer = new ArraySegment<byte>(Encoding.UTF8.GetBytes(stringResult));
-                            await client.SendAsync(outputBuffer, WebSocketMessageType.Text, true, CancellationToken.None);
-                        }
-                    }
-                }
-                finally {
-                    Lock.ExitReadLock();
-                }                
+                await WsConnectionManager.BroadcastMessage(stringResult);
             }
         }
 
@@ -69,6 +47,13 @@ namespace AspChat.Services {
             if (chatMessage != null) {
                 _chatStorage.AddChatMessage(chatMessage);    
             }
+        }
+
+        private int GetUserIdFromCookie(AspNetWebSocketContext context) {
+            var requestCookie = context.Cookies["id"];
+            if (requestCookie != null)
+                return Convert.ToInt32(requestCookie.Value);
+            return -1;
         }
     }
 }

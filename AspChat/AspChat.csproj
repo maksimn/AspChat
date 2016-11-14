@@ -109,6 +109,8 @@
     <Compile Include="Models\ChatMessage.cs" />
     <Compile Include="ChatData\InMemoryChatRepository.cs" />
     <Compile Include="Models\ChatUser.cs" />
+    <Compile Include="Models\WsChatEntity.cs" />
+    <Compile Include="Models\WsConnectionManager.cs" />
     <Compile Include="ViewModels\ChatViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ChatMessageService.cs" />
