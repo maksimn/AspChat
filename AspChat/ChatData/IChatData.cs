@@ -12,5 +12,9 @@ namespace AspChat.ChatData {
         List<ChatMessage> ChatMessages { get; }
 
         ChatUser GetChatUserById(int id);
+
+        void DeleteUser(int userId);
+
+        int GetIdForNewUser();
     }
 }

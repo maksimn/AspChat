@@ -13,7 +13,7 @@ namespace AspChat.Models {
             _wsChatEntities.Add(wsChatEntity);
         }
 
-        public static async Task BroadcastMessage(string message) {
+        public static async Task SendChatMessageToAll(string message) {
             var outputBuffer = new ArraySegment<byte>(Encoding.UTF8.GetBytes(message));
             foreach (var wsChatEntity in _wsChatEntities) {
                 var client = wsChatEntity.WebSocket;

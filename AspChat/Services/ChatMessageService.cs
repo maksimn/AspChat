@@ -34,7 +34,7 @@ namespace AspChat.Services {
                 AddReceivedMsgToChatRoom(stringResult);
 
                 //Передаём сообщение всем клиентам
-                await WsConnectionManager.BroadcastMessage(stringResult);
+                await WsConnectionManager.SendChatMessageToAll(stringResult);
             }
         }
 
