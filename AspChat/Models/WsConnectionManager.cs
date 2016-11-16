@@ -22,5 +22,9 @@ namespace AspChat.Models {
                 }
             }
         }
+
+        public static void DeleteWsChatEntity(WsChatEntity entity) {
+            _wsChatEntities.Remove(entity);
+        }
     }
 }

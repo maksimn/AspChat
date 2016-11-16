@@ -28,17 +28,14 @@ namespace AspChat.ChatData {
         }
 
         public void DeleteUser(int userId) {
+            var chatUser = InMemoryChatRepository.ChatUsers.Find(chatuser => chatuser.Id == userId);
+            InMemoryChatRepository.ChatUsers.Remove(chatUser);
         }
 
         public int GetIdForNewUser() {
             int newId = 0;
-            for (int i = 0; i < InMemoryChatRepository.ChatUsers.Count; i++) {
-                if (InMemoryChatRepository.ChatUsers[i].Id == newId) {
-                    newId++;
-                }
-                else {
-                    break;
-                }
+            while (InMemoryChatRepository.ChatUsers.Exists(chatUser => chatUser.Id == newId)) {
+                newId++;
             }
             return newId;
         }

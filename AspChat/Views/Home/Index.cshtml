@@ -67,8 +67,15 @@
                 alert('Произошла ошибка соединения с чатом.');
             };
             
+            window.onunload = function() {
+                deleteCookie();
+            }
+
+            function deleteCookie() {
+                document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+            }
         } catch (error) {
-            alert("Связь через сокеты сейчас не работает.");
+            alert("Ошибка работы программы.");
         }
     </script>
 
