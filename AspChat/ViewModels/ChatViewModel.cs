@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using AspChat.Models;
+using Newtonsoft.Json;
 
 namespace AspChat.ViewModels {
     public class ChatViewModel {
@@ -9,5 +10,10 @@ namespace AspChat.ViewModels {
         }
         public ChatUser ThisUser { get; set; }
         public List<ChatMessage> ChatMessages { get; set; }
+        public string JsonChatMessages {
+            get {
+                return JsonConvert.SerializeObject(ChatMessages);
+            }
+        }
     }
 }

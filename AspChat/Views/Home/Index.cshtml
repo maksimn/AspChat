@@ -1,83 +1,17 @@
 ﻿@model AspChat.ViewModels.ChatViewModel
 
-@{
-    var userName = @Model.ThisUser.Name;
-}
-
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Чат</title>
+    <meta charset="utf-8">
+    <title>Чат на React</title>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Client/output/main.css")">
 </head>
 <body>
-    <h4>Вы вошли как @userName</h4>
-
-    <div>Напишите сообщение в чат:</div>
-    <input type="text" id="message" />
-    <input type="button" value="send" id="send" />
-
-    <div id='messages'>
-        @foreach (var msg in @Model.ChatMessages) {
-            <p>@msg.ChatUserName: @msg.Text</p>
-        }
-    </div>
-
-    <script>
-        try {
-            var $txt = document.getElementById('message'),
-                $messages = document.getElementById('messages'),
-                sendButton = document.getElementById('send');
-
-            var host = window.location.host;
-            var serverChatHandler = "ChatHandler.ashx";
-            var wsProtocol = "ws://";
-            var wsUrl = wsProtocol + host + "/" + serverChatHandler;
-
-            var socket = new WebSocket(wsUrl);
-
-            socket.onopen = function() {
-                sendButton.onclick = function () {
-                    var chatMessage = {
-                        Type: 'ChatMessage',
-                        ChatUserName: '@userName',
-                        Text: $txt.value
-                    };
-                    var jsonChatMessage = JSON.stringify(chatMessage);
-                    socket.send(jsonChatMessage);
-                    $txt.value = '';
-                };
-            }
-
-            socket.onmessage = function (msg) {                
-                var trimChatMessage = msg.data.replace(/\0/g, '');
-                var chatMsgObj = JSON.parse(trimChatMessage);
-
-                var $el = document.createElement('p');
-                $el.innerHTML = chatMsgObj.ChatUserName + ": " + chatMsgObj.Text;
-                $messages.appendChild($el);
-            };
-
-            socket.onclose = function() {
-                alert('Соединение закрыто.');
-            }
-
-            socket.onerror = function () {
-                alert('Произошла ошибка соединения с чатом.');
-            };
-            
-            window.onunload = function() {
-                deleteCookie();
-            }
-
-            function deleteCookie() {
-                document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-            }
-        } catch (error) {
-            alert("Ошибка работы программы.");
-        }
-    </script>
-
+    <div id="app"></div>
+    <script data-username="@Model.ThisUser.Name"
+            data-user-id="@Model.ThisUser.Id"
+            data-chat-messages='@Model.JsonChatMessages'
+            src="@Url.Content("~/Client/output/index.js")"></script>
 </body>
 </html>
