@@ -3,7 +3,12 @@ import { combineReducers } from 'redux';
 const scriptElement = document.querySelector('script');      
 const jsonChatMessages = scriptElement.getAttribute('data-chat-messages');
 
-const initChatMessages = JSON.parse(jsonChatMessages);
+let initChatMessages = JSON.parse(jsonChatMessages);
+initChatMessages = initChatMessages.map((cm) => { return {
+    chatUserName: cm.ChatUserName,
+    chatMessageText: cm.Text
+}});
+
 const userName = scriptElement.getAttribute('data-userName');
 
 function userNameReducer(state=userName, action) {
