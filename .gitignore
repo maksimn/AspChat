@@ -4,6 +4,8 @@ AspChat/obj
 AspChat.sln.DotSettings.user
 AspChat/Properties/PublishProfiles/
 AspChat.v12.suo
+AspChat/Web.Debug.config
+AspChat/Web.Release.config
 
 AspChat/node_modules
 AspChat/Client/output/index.js
