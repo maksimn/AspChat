@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 
 import Layout from './components/Layout';
 import store from './store';
-import './session';
 
 const app = document.getElementById('app');
 ReactDOM.render(
