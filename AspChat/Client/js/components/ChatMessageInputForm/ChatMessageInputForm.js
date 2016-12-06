@@ -15,11 +15,11 @@ export default class ChatMessageInputForm extends React.Component {
         };
         socket.send(JSON.stringify(chatMessage));
     }
+    
     render() {
         return (
             <div>
                 <form action="/" method="POST" onSubmit={this.submitHandler.bind(this)}>
-                    <h4>Вы вошли как {this.props.userName}</h4>
                     <input name="messageText" type="text" />
                     <input type="submit" value="Отправить" />
                 </form>
