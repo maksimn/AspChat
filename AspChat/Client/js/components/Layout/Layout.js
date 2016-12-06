@@ -9,8 +9,8 @@ export class Layout extends React.Component {
     render() {
         const chatUserName = this.props.userName;
         return (
-            <div>
-                <header>
+            <div className={ styles.body }>
+                <header className={ styles.header }>
                     <div className={ styles.userSessionArea }>
                         <div className={ styles.userName }>
                             {chatUserName}
