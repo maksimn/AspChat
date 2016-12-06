@@ -1,14 +1,19 @@
 import React from "react";
 
+import socket from "../../webSocket";
+
 export default class ChatMessageInputForm extends React.Component {
     submitHandler(e) {
         e.preventDefault();
         const messageText = e.target.messageText.value;
         e.target.messageText.value = "";
-        this.props.addChatMessage({
-            chatUserName: this.props.userName,
-            chatMessageText: messageText
-        });
+
+        var chatMessage = {
+            Type: 'ChatMessage',
+            ChatUserName: this.props.userName,
+            Text: messageText
+        };
+        socket.send(JSON.stringify(chatMessage));
     }
     render() {
         return (
