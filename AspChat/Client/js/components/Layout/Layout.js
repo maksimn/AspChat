@@ -21,7 +21,10 @@ export class Layout extends React.Component {
                     </div>
                 </header>
                 <main className={ styles.chatRoom }>
+                    <div className={ styles.chatRoomHeader }></div>
+
                     <ChatMessagesListView appState={this.props} />
+                    
                     <ChatMessageInputForm userName={chatUserName} />
                 </main>
             </div>

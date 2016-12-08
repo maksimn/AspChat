@@ -43,8 +43,16 @@
 }
 
 .chatRoom {
+    position: relative;
     width: 550px;
     height: calc(100vh - 41px - 15px - 15px);
     margin: 15px auto 0;
     background-color: #fff;
+    border: 1px solid #e3e4e8;
+    border-radius: 2px;
+}
+
+.chatRoomHeader {
+    height: 46px;
+    border-bottom: 1px solid #e3e4e8;
 }

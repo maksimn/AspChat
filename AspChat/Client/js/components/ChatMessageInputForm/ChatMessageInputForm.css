@@ -1,0 +1,17 @@
+.chatMessageInput {
+    position: absolute;
+    bottom: 0;
+    width: 550px;
+    height: 64px;
+    background-color: #fafbfc;
+    border-top: 1px solid #e3e4e8;
+}
+
+.chatMessageInputForm {
+    margin: 13px 0 0 56px;
+}
+
+.messageTextBox {
+    width: 436px;
+    height: 36px;
+}

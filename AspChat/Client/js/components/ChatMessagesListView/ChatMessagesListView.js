@@ -14,7 +14,7 @@ export default class ChatMessagesListView extends React.Component {
             if(chatMessage.chatUserName === thisChatUserName) {
                 chatMessageViews.push(
                     <ThisUserChatMessageView 
-                        key={chatMessage.chatMessageId}
+                        key={i}
                         ChatMessageId={chatMessage.chatMessageId}
                         ChatUserName={chatMessage.chatUserName}
                     >
@@ -24,7 +24,7 @@ export default class ChatMessagesListView extends React.Component {
             } else {
                 chatMessageViews.push(
                     <ChatMessageView
-                        key={chatMessage.chatMessageId}
+                        key={i}
                         ChatMessageId={chatMessage.chatMessageId}
                         ChatUserName={chatMessage.chatUserName}                    
                     >

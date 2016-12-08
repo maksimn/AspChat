@@ -1,6 +1,7 @@
 import React from "react";
 
 import socket from "../../webSocket";
+import styles from "./ChatMessageInputForm.css";
 
 export default class ChatMessageInputForm extends React.Component {
     submitHandler(e) {
@@ -18,10 +19,11 @@ export default class ChatMessageInputForm extends React.Component {
     
     render() {
         return (
-            <div>
-                <form action="/" method="POST" onSubmit={this.submitHandler.bind(this)}>
-                    <input name="messageText" type="text" />
-                    <input type="submit" value="Отправить" />
+            <div className={ styles.chatMessageInput }>
+                <form className={ styles.chatMessageInputForm } 
+                      action="/" method="POST" onSubmit={this.submitHandler.bind(this)}>
+                    <textarea className={ styles.messageTextBox } name="messageText"></textarea>
+                    <input type="submit" value="Отпр" />
                 </form>
             </div>
         );
