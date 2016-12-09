@@ -1,0 +1,4 @@
+.chatMessagesListView {
+    height: calc(100vh - 41px - 15px - 46px - 64px - 15px);
+    overflow: auto;
+}

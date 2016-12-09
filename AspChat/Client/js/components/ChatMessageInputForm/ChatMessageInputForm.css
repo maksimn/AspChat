@@ -7,11 +7,11 @@
     border-top: 1px solid #e3e4e8;
 }
 
-.chatMessageInputForm {
-    margin: 13px 0 0 56px;
-}
-
 .messageTextBox {
     width: 436px;
     height: 36px;
+    margin: 12px 0 0 56px;
+    resize: none;
+    border-color: #d3d9de;
+    border-radius: 3px;
 }

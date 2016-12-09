@@ -1,6 +1,7 @@
 import React from "react";
 import ChatMessageView from "../ChatMessageView";
 import ThisUserChatMessageView from "../ThisUserChatMessageView";
+import styles from "./ChatMessagesListView.css";
 
 export default class ChatMessagesListView extends React.Component {
     render() {
@@ -34,7 +35,9 @@ export default class ChatMessagesListView extends React.Component {
             }
         }
         return (
-            <div>{chatMessageViews}</div>
+            <div className={ styles.chatMessagesListView }>
+                {chatMessageViews}
+            </div>
         );
     }
 }
