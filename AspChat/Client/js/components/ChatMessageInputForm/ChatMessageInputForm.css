@@ -9,8 +9,10 @@
 
 .messageTextBox {
     width: 436px;
-    height: 36px;
+    height: 26px;
+    padding: 9px 0 0 13px;
     margin: 12px 0 0 56px;
+    font-family: Tahoma, Geneva, sans-serif;
     resize: none;
     border-color: #d3d9de;
     border-radius: 3px;
