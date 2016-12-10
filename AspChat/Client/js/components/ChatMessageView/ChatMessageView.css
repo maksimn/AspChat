@@ -1,23 +1,23 @@
 .chatMessageView {
-    width : 300px;
-    border: 1px solid black;
+    width: 533px;
+    font-size: 13px;
+}
+
+.chatMessageView:first-child {
+    margin-top: 12px;
+}
+
+.chatMessageView:last-child {
+    margin-bottom: 12px;
 }
 
 .chatUserNameStyle {
-    width: 65px;
-    vertical-align: top;
+    padding: 6px 82px 2px;
+    font-weight: 600;
+    color: #42648b;
 }
 
 .chatMessageStyle {
-    width: 155px;
-    overflow: auto;
-}
-
-.chatUserNameStyle, .chatMessageStyle {
-    padding: 5px;
-    display: inline-block;
-}
-
-.emptyBlockStyle {
-    width: 50px;
+    padding: 0 65px 10px 82px;
+    line-height: 18px;
 }
