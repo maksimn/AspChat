@@ -1,15 +1,22 @@
 import { combineReducers } from 'redux';
+import { routerReducer } from 'react-router-redux';
 
 const scriptElement = document.querySelector('script');      
 const jsonChatMessages = scriptElement.getAttribute('data-chat-messages');
 
 let initChatMessages = JSON.parse(jsonChatMessages);
-initChatMessages = initChatMessages.map((cm) => { return {
-    chatUserName: cm.ChatUserName,
-    chatMessageText: cm.Text
-}});
+initChatMessages = initChatMessages != null 
+    ? 
+        initChatMessages.map((cm) => { return {
+            chatUserName: cm.ChatUserName,
+            chatMessageText: cm.Text
+        }}) 
+    : 
+        []
+;
 
-const userName = scriptElement.getAttribute('data-userName');
+let userName = scriptElement.getAttribute('data-userName');
+userName = userName == null ? "" : userName;
 
 function userNameReducer(state=userName, action) {
     return state;
@@ -30,7 +37,8 @@ function chatMessagesReducer(state=initChatMessages, action) {
 
 const reducers = combineReducers({
     userName: userNameReducer,
-    chatMessages: chatMessagesReducer
+    chatMessages: chatMessagesReducer,
+    routing: routerReducer
 });
 
 export default reducers;

@@ -9,9 +9,11 @@
 </head>
 <body>
     <div id="app"></div>
-    <script data-username="@Model.ThisUser.Name"
-            data-user-id="@Model.ThisUser.Id"
-            data-chat-messages='@Model.JsonChatMessages'
+    <script @if (Model != null) {  
+                <text> data-username="@Model.ThisUser.Name" </text>     
+                <text> data-user-id="@Model.ThisUser.Id" </text>       
+                <text> data-chat-messages='@Model.JsonChatMessages' </text>     
+            }
             src="@Url.Content("~/Client/output/index.js")"></script>
 </body>
 </html>

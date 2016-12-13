@@ -5,11 +5,11 @@ using AspChat.Models;
 using AspChat.ViewModels;
 
 namespace AspChat.Services {
-    public class HomeService : IHomeService {
+    public class TmpHomeService : IHomeService {
         private readonly HttpContextBase _httpContext;
         private readonly IChatData _chatStorage = new StaticChatData();
 
-        public HomeService(HttpContextBase httpContext) {
+        public TmpHomeService(HttpContextBase httpContext) {
             _httpContext = httpContext;
         }
 

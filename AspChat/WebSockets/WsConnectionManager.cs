@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AspChat.Models {
+namespace AspChat.WebSockets {
     public static class WsConnectionManager {
         private static List<WsChatEntity> _wsChatEntities = new List<WsChatEntity>();
 

@@ -1,6 +1,7 @@
 ﻿using System.Net.WebSockets;
+using AspChat.Models;
 
-namespace AspChat.Models {
+namespace AspChat.WebSockets {
     public class WsChatEntity {
         private readonly WebSocket _webSocket;
         private ChatUser _chatUser;
