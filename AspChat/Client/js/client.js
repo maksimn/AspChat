@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Route, browserHistory} from "react-router";
+import { Router, Route, browserHistory, IndexRoute } from "react-router";
 import { syncHistoryWithStore } from "react-router-redux";
 
 import StartPage from "./pages/StartPage";
+import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
 import store from './store';
 
 const history = syncHistoryWithStore(browserHistory, store);
@@ -14,6 +16,8 @@ ReactDOM.render(
     <Provider store={store}>
         <Router history={history}>
             <Route path="/" component={StartPage}></Route>
+            <Route path="register" component={RegisterPage}></Route>
+            <Route path="login" component={LoginPage}></Route>
         </Router>
     </Provider>
 , app);
