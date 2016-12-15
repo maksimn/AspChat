@@ -1,10 +1,19 @@
 import React from "react";
 import { Link } from "react-router";
 
+import styles from "./RegisterPage.css";
+
 export default class RegisterPage extends React.Component {
     render() {
         return (
-            <h1>Страница регистрации <Link to="/">Назад</Link></h1>
+            <div>
+                <header className={ styles.header }>
+                    <div className={ styles.chatLabel }>Чат</div>
+                    <div className={ styles.headerLinks }>
+                        <Link to="/">Назад</Link>
+                    </div> 
+                </header>
+            </div>
         );
     }
 }

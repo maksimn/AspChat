@@ -1,35 +1,9 @@
-@import url("../../reset.css");
-
-body {
-    font-family: Verdana, Geneva, sans-serif;
-    background-color: #edeef0;
-}
-
-.header {
-    position: relative;
-    height: 41px;
-    background-color: #507299;
-}
-
-.chatLabel {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    margin-left: 200px;
-    font-size: 16px;
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: 1px;
-    transform: translateY(-50%);
-}
-
 .headerLinks {
     position: absolute;
-    top: 50%;
+    top: 14px;
     right: 0;
     margin-right: 250px;
     font-size: 13px;
-    transform: translateY(-50%);
 }
 
 .enterLink,
