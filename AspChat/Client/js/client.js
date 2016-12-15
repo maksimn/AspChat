@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Route, browserHistory, IndexRoute } from "react-router";
+import { Router, Route, hashHistory, IndexRoute } from "react-router";
 import { syncHistoryWithStore } from "react-router-redux";
 
 import App from "./pages/App";
@@ -10,7 +10,7 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import store from './store';
 
-const history = syncHistoryWithStore(browserHistory, store);
+const history = syncHistoryWithStore(hashHistory, store);
 
 const app = document.getElementById('app');
 ReactDOM.render(

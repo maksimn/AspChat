@@ -7,12 +7,7 @@ export default class RegisterPage extends React.Component {
     render() {
         return (
             <div>
-                <header className={ styles.header }>
-                    <div className={ styles.chatLabel }>Чат</div>
-                    <div className={ styles.headerLinks }>
-                        <Link to="/">Назад</Link>
-                    </div> 
-                </header>
+                <Link to="/">Назад</Link>
             </div>
         );
     }
