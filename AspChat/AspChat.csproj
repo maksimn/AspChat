@@ -103,6 +103,7 @@
     <Compile Include="ChatHandler.ashx.cs">
       <DependentUpon>ChatHandler.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

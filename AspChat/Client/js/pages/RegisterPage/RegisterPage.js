@@ -9,7 +9,7 @@ export default class RegisterPage extends React.Component {
         return (
             <div>
                 <div className={ styles.backLinkWrap }>
-                    <Link to="/">Назад</Link>
+                    <Link className={ styles.backLink } to="/">Назад</Link>
                 </div>
                 <div className={ styles.registerArea }>
                     <RegistrationForm />

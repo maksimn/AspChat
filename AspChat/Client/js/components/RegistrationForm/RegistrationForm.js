@@ -23,17 +23,18 @@ export default class RegistrationForm extends React.Component {
         let errorsArea = document.querySelector(`.${styles.formInputErrors }`);
         errorsArea.innerHTML = "Введенные значения пароля должны совпадать";
     }
+
     render() {
         return(
             <form className={styles.registerForm} method="post" action="register">
                 <div className={styles.registerFormHeader}>Регистрация в чате</div>
                 <div className={styles.formField}>
                     <label>Имя:</label><br />
-                    <input type="text" required />
+                    <input type="text" name="chatUserName" required />
                 </div>
                 <div className={styles.formField}>
                     <label>Пароль:</label><br />
-                    <input id="password" type="password" required />
+                    <input id="password" name="password" type="password" required />
                 </div>
                 <div className={styles.formField}>
                     <label>Повторите пароль:</label><br />

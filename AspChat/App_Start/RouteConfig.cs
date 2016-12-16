@@ -7,18 +7,23 @@ namespace AspChat {
         public static void RegisterRoutes(RouteCollection routes) {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.Add("Empty", new Route(url: "", routeHandler: new ChatRouteHandler()));
-        }
-    }
+            var mvcRouteHandler = new MvcRouteHandler();
 
-    class ChatRouteHandler : IRouteHandler {
-        public IHttpHandler GetHttpHandler(RequestContext requestContext) {
-            var url = requestContext.HttpContext.Request.Url != null ? requestContext.HttpContext.Request.Url : null;
-            if (url != null && url.AbsolutePath.Length == 1) {
-                requestContext.RouteData.Values["controller"] = "home";
-                requestContext.RouteData.Values["action"] = "index";                
-            }
-            return new MvcHandler(requestContext);
+            routes.Add("Empty", 
+                       new Route(
+                           "", 
+                           new RouteValueDictionary(new { controller = "Home", action = "Index" }), 
+                           mvcRouteHandler
+                       )
+            );
+
+            routes.Add("Auth", 
+                       new Route(
+                           "{action}", 
+                           new RouteValueDictionary(new { controller = "Auth" }),
+                           mvcRouteHandler
+                       )
+            );
         }
     }
 }

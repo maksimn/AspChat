@@ -4,11 +4,6 @@
     right: 0;
     margin-right: 250px;
     font-size: 13px;
-    color: #fff;
-}
-
-.backLink {
-    
 }
 
 .registerArea {
@@ -16,4 +11,8 @@
     margin: 25px auto;
     font-size: 14px;
     background-color: #fff;
+}
+
+.backLink {
+    color: #fff;
 }
