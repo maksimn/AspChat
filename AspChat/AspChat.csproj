@@ -110,6 +110,7 @@
     </Compile>
     <Compile Include="Models\ChatMessage.cs" />
     <Compile Include="ChatData\InMemoryChatRepository.cs" />
+    <Compile Include="Models\ChatUser.cs" />
     <Compile Include="ViewModels\ChatUserViewModel.cs" />
     <Compile Include="WebSockets\WsChatEntity.cs" />
     <Compile Include="WebSockets\WsConnectionManager.cs" />

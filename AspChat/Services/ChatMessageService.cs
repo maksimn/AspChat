@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.WebSockets;
 using AspChat.ChatData;
+using AspChat.Models;
 using AspChat.ViewModels;
 using AspChat.WebSockets;
 using Newtonsoft.Json;
@@ -20,8 +21,9 @@ namespace AspChat.Services {
 
             var userId = GetUserIdFromCookie(context);
             var chatUser = _chatStorage.GetChatUserById(userId);
+            var chatUserVM = new ChatUserViewModel(chatUser.Id, chatUser.Name);
 
-            var wsChatEntity = new WsChatEntity(socket, chatUser);
+            var wsChatEntity = new WsChatEntity(socket, chatUserVM);
             WsConnectionManager.AddWsChatEntity(wsChatEntity);
 
             // Слушаем его

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AspChat.Models;
 using AspChat.ViewModels;
 
 namespace AspChat.ChatData {
@@ -13,7 +14,7 @@ namespace AspChat.ChatData {
             }
         }
 
-        public void AddChatUser(ChatUserViewModel chatUser) {
+        public void AddChatUser(ChatUser chatUser) {
             InMemoryChatRepository.ChatUsers.Add(chatUser);
         }
 
@@ -23,13 +24,11 @@ namespace AspChat.ChatData {
             }
         }
 
-        public ChatUserViewModel GetChatUserById(int id) {
+        public ChatUser GetChatUserById(int id) {
             if(InMemoryChatRepository.ChatUsers.Exists(chatUser => chatUser.Id == id)) { 
                 return InMemoryChatRepository.ChatUsers.Find(chatuser => chatuser.Id == id);
             } else {
-                var newUser = new ChatUserViewModel(id, "Гость" + (id + 1));
-                AddChatUser(newUser);
-                return newUser;
+                return null;
             }
         }
 
@@ -48,7 +47,7 @@ namespace AspChat.ChatData {
 
 
         public bool IsUserWithGivenNameExist(string userName) {
-            return false;
+            return InMemoryChatRepository.ChatUsers.Exists(chatUser => chatUser.Name == userName);
         }
     }
 }

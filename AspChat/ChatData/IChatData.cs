@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AspChat.Models;
 using AspChat.ViewModels;
 
 namespace AspChat.ChatData {
@@ -7,11 +8,11 @@ namespace AspChat.ChatData {
 
         int NumChatUsers { get; }
 
-        void AddChatUser(ChatUserViewModel chatUser);
+        void AddChatUser(ChatUser chatUser);
 
         List<ChatMessage> ChatMessages { get; }
 
-        ChatUserViewModel GetChatUserById(int id);
+        ChatUser GetChatUserById(int id);
 
         void DeleteUser(int userId);
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AspChat.Models;
 using AspChat.ViewModels;
 using Newtonsoft.Json;
 
