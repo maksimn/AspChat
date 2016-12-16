@@ -16,5 +16,7 @@ namespace AspChat.ChatData {
         void DeleteUser(int userId);
 
         int GetIdForNewUser();
+
+        bool IsUserWithGivenNameExist(string userName);
     }
 }

@@ -45,5 +45,10 @@ namespace AspChat.ChatData {
             }
             return newId;
         }
+
+
+        public bool IsUserWithGivenNameExist(string userName) {
+            return false;
+        }
     }
 }

@@ -11,3 +11,6 @@ AspChat/Web.Release.config
 AspChat/node_modules
 AspChat/Client/output/index.js
 AspChat/Client/output/main.css
+
+AspChat.Tests/bin
+AspChat.Tests/obj
