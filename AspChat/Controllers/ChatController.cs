@@ -4,10 +4,10 @@ using AspChat.Services;
 using AspChat.ViewModels;
 
 namespace AspChat.Controllers {
-    public class HomeController : Controller {
+    public class ChatController : Controller {
         public ActionResult Index() {
             if (Session["userId"] == null) {
-                return View((ChatViewModel)null);
+                return View((ChatIndexViewModel)null);
             } else {
                 return null;
             }

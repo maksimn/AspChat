@@ -3,8 +3,8 @@ using AspChat.ViewModels;
 using Newtonsoft.Json;
 
 namespace AspChat.ViewModels {
-    public class ChatViewModel {
-        public ChatViewModel(ChatUserViewModel user, List<ChatMessage> messages) {
+    public class ChatIndexViewModel {
+        public ChatIndexViewModel(ChatUserViewModel user, List<ChatMessage> messages) {
             ThisUser = user;
             ChatMessages = messages;
         }

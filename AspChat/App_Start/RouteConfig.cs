@@ -12,7 +12,7 @@ namespace AspChat {
             routes.Add("Empty", 
                        new Route(
                            "", 
-                           new RouteValueDictionary(new { controller = "Home", action = "Index" }), 
+                           new RouteValueDictionary(new { controller = "Chat", action = "Index" }), 
                            mvcRouteHandler
                        )
             );

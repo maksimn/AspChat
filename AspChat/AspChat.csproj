@@ -104,7 +104,7 @@
       <DependentUpon>ChatHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AuthController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -113,7 +113,7 @@
     <Compile Include="ViewModels\ChatUserViewModel.cs" />
     <Compile Include="WebSockets\WsChatEntity.cs" />
     <Compile Include="WebSockets\WsConnectionManager.cs" />
-    <Compile Include="ViewModels\ChatViewModel.cs" />
+    <Compile Include="ViewModels\ChatIndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ChatMessageService.cs" />
     <Compile Include="Services\IChatMessageService.cs" />
@@ -125,7 +125,7 @@
     <Content Include="ChatHandler.ashx" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <Content Include="Views\web.config" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Chat\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
