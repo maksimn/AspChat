@@ -35,3 +35,10 @@
     width: 210px;
     margin: 0 auto;
 }
+
+.formInputErrors {
+    width: 210px;
+    padding-bottom: 15px;
+    margin: 20 auto;
+    color: #f00;
+}

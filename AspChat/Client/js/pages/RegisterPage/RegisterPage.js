@@ -4,6 +4,27 @@ import { Link } from "react-router";
 import styles from "./RegisterPage.css";
 
 export default class RegisterPage extends React.Component {
+    isFormDataValid() {
+        const psw = document.getElementById("password").value;
+        const psw1 = document.getElementById("password1").value;
+        if (psw !== psw1) {
+            return false;
+        }
+        return true;
+    }
+
+    clientValidation(e) {
+        if (!this.isFormDataValid()) {
+            e.preventDefault();
+        }
+        this.showValidationErrors();
+    }
+
+    showValidationErrors() {
+        let errorsArea = document.querySelector(`.${styles.formInputErrors }`);
+        errorsArea.innerHTML = "Введенные значения пароля должны совпадать";
+    }
+
     render() {
         return (
             <div>
@@ -24,11 +45,14 @@ export default class RegisterPage extends React.Component {
                         </div>
                         <div className={ styles.formField }>
                             <label>Повторите пароль:</label><br />
-                            <input id="password2" type="password" required />
+                            <input id="password1" type="password" required />
                         </div>
                         <div className={ styles.formSubmit }>
-                            <input type="submit" value="Отправить" />
+                            <input type="submit" value="Отправить" 
+                                onClick={ this.clientValidation.bind(this) }
+                            />
                         </div>
+                        <div className={ styles.formInputErrors }></div>
                     </form>
                 </div>
             </div>
