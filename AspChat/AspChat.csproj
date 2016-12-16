@@ -110,15 +110,13 @@
     </Compile>
     <Compile Include="Models\ChatMessage.cs" />
     <Compile Include="ChatData\InMemoryChatRepository.cs" />
-    <Compile Include="Models\ChatUser.cs" />
+    <Compile Include="ViewModels\ChatUserViewModel.cs" />
     <Compile Include="WebSockets\WsChatEntity.cs" />
     <Compile Include="WebSockets\WsConnectionManager.cs" />
     <Compile Include="ViewModels\ChatViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ChatMessageService.cs" />
-    <Compile Include="Services\TmpHomeService.cs" />
     <Compile Include="Services\IChatMessageService.cs" />
-    <Compile Include="Services\IHomeService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

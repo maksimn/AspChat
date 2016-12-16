@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace AspChat.Models {
-    public class ChatUser {
+namespace AspChat.ViewModels {
+    public class ChatUserViewModel {
         private readonly int _id;
         private String _name;
 
-        public ChatUser(int id, String name) {
+        public ChatUserViewModel(int id, String name) {
             _id = id;
             _name = name;
         }

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using AspChat.Models;
+using AspChat.ViewModels;
 
 namespace AspChat.ChatData {
     public class StaticChatData : IChatData {
@@ -13,7 +13,7 @@ namespace AspChat.ChatData {
             }
         }
 
-        public void AddChatUser(ChatUser chatUser) {
+        public void AddChatUser(ChatUserViewModel chatUser) {
             InMemoryChatRepository.ChatUsers.Add(chatUser);
         }
 
@@ -23,11 +23,11 @@ namespace AspChat.ChatData {
             }
         }
 
-        public ChatUser GetChatUserById(int id) {
+        public ChatUserViewModel GetChatUserById(int id) {
             if(InMemoryChatRepository.ChatUsers.Exists(chatUser => chatUser.Id == id)) { 
                 return InMemoryChatRepository.ChatUsers.Find(chatuser => chatuser.Id == id);
             } else {
-                var newUser = new ChatUser(id, "Гость" + (id + 1));
+                var newUser = new ChatUserViewModel(id, "Гость" + (id + 1));
                 AddChatUser(newUser);
                 return newUser;
             }

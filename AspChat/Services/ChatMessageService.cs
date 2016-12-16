@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.WebSockets;
 using AspChat.ChatData;
-using AspChat.Models;
+using AspChat.ViewModels;
 using AspChat.WebSockets;
 using Newtonsoft.Json;
 
