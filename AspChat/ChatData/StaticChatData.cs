@@ -8,12 +8,6 @@ namespace AspChat.ChatData {
             InMemoryChatRepository.ChatMessages.Add(chatMessage);
         }
 
-        public int NumChatUsers {
-            get {
-                return InMemoryChatRepository.ChatUsers.Count;
-            }
-        }
-
         public void AddChatUser(ChatUser chatUser) {
             InMemoryChatRepository.ChatUsers.Add(chatUser);
         }
@@ -22,15 +16,6 @@ namespace AspChat.ChatData {
             get {
                 return InMemoryChatRepository.ChatMessages;
             }
-        }
-
-        public ChatUser GetChatUserById(int id) {
-            return InMemoryChatRepository.ChatUsers.Find(chatuser => chatuser.Id == id);
-        }
-
-        public void DeleteUser(int userId) {
-            var chatUser = InMemoryChatRepository.ChatUsers.Find(chatuser => chatuser.Id == userId);
-            InMemoryChatRepository.ChatUsers.Remove(chatUser);
         }
 
         public int GetIdForNewUser() {
