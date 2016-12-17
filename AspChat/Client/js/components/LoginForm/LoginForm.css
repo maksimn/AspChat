@@ -1,0 +1,25 @@
+.loginFormHeader {
+    padding: 20px 10px 0;
+    margin: 10px;
+    font-weight: 600;
+}
+
+.formField {
+    padding: 10px;
+}
+
+.formSubmit {
+    padding: 10px 10px 20px;
+}
+
+.loginForm {
+    width: 210px;
+    margin: 0 auto;
+}
+
+.formInputErrors {
+    width: 210px;
+    padding-bottom: 15px;
+    margin: 20 auto;
+    color: #f00;
+}

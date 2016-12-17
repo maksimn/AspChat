@@ -1,0 +1,18 @@
+.backLinkWrap {
+    position: absolute;
+    top: 14px;
+    right: 0;
+    margin-right: 250px;
+    font-size: 13px;
+}
+
+.registerArea {
+    width: 300px;
+    margin: 25px auto;
+    font-size: 14px;
+    background-color: #fff;
+}
+
+.backLink {
+    color: #fff;
+}

@@ -10,6 +10,4 @@ namespace AspChat.Controllers {
             return Redirect(result.RedirectUrl);
         }
     }
-
-
 }
