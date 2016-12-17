@@ -8,7 +8,6 @@ import styles from "./ChatRoom.css";
 export class ChatRoom extends React.Component {
     render() {
         const chatUserName = this.props.userName;
-        console.log("chatUserName=", chatUserName);
         return (
             <div className={ styles.body }>
                 <main className={ styles.chatRoom }>

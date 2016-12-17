@@ -17,7 +17,6 @@ initChatMessages = initChatMessages != null
 
 let userName = scriptElement.getAttribute('data-username');
 userName = userName == null ? "" : userName;
-console.log("userName=",userName);
 
 function userNameReducer(state=userName, action) {
     return state;

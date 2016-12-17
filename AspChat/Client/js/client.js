@@ -17,7 +17,7 @@ const app = document.getElementById('app');
 
 let routes = [];
 
-if (window.isAuth) {
+if (isAuth()) {
     routes.push(<IndexRoute key={0} component={ChatRoom}></IndexRoute>);
 } else {
     routes.push(<IndexRoute key={1} component={StartPage}></IndexRoute>);
