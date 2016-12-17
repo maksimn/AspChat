@@ -25,11 +25,7 @@ namespace AspChat.ChatData {
         }
 
         public ChatUser GetChatUserById(int id) {
-            if(InMemoryChatRepository.ChatUsers.Exists(chatUser => chatUser.Id == id)) { 
-                return InMemoryChatRepository.ChatUsers.Find(chatuser => chatuser.Id == id);
-            } else {
-                return null;
-            }
+            return InMemoryChatRepository.ChatUsers.Find(chatuser => chatuser.Id == id);
         }
 
         public void DeleteUser(int userId) {
