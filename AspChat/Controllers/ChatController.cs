@@ -7,7 +7,7 @@ using AspChat.ChatData;
 namespace AspChat.Controllers {
     public class ChatController : Controller {
         public ActionResult Index() {
-            if (this.User.Identity.IsAuthenticated) {
+            if (User.Identity.IsAuthenticated) {
                 IChatData chatData = new StaticChatData();
                 var chatUserVM = chatData.GetChatUserViewModelByName(this.User.Identity.Name);
                 var viewModel = new ChatIndexViewModel(chatUserVM, chatData.ChatMessages);

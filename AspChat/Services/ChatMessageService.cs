@@ -19,11 +19,10 @@ namespace AspChat.Services {
             // Получаем сокет клиента из контекста запроса
             var socket = context.WebSocket;
 
-            var userId = GetUserIdFromCookie(context);
-            var chatUser = _chatStorage.GetChatUserById(userId);
-            var chatUserVM = new ChatUserViewModel(chatUser.Id, chatUser.Name);
+            var userName = context.User.Identity.Name;
+            var chatUserViewModel = _chatStorage.GetChatUserViewModelByName(userName);
 
-            var wsChatEntity = new WsChatEntity(socket, chatUserVM);
+            var wsChatEntity = new WsChatEntity(socket, chatUserViewModel);
             WsConnectionManager.AddWsChatEntity(wsChatEntity);
 
             // Слушаем его
@@ -41,8 +40,7 @@ namespace AspChat.Services {
                 await WsConnectionManager.SendChatMessageToAll(stringResult);
             }
             // Если программа дошла сюда, значит, соединение закрылось
-            // Удаляем этого пользователя и связанный с ним сокет
-            _chatStorage.DeleteUser(userId);
+            // Удаляем сокет
             WsConnectionManager.DeleteWsChatEntity(wsChatEntity);
         }
 
@@ -55,14 +53,6 @@ namespace AspChat.Services {
             if (chatMessage != null) {
                 _chatStorage.AddChatMessage(chatMessage);    
             }
-        }
-
-        private int GetUserIdFromCookie(AspNetWebSocketContext context) {
-            var requestCookie = context.Cookies["id"];
-            if (requestCookie != null) {
-                return Convert.ToInt32(requestCookie.Value);
-            }
-            return -1;
         }
     }
 }

@@ -14,7 +14,7 @@
             window.isAuth = true;
         </script>
     }
-    <script @if (User.Identity.IsAuthenticated) {
+    <script id="main" @if (User.Identity.IsAuthenticated) {
                 <text> data-username="@Model.ThisUser.Name" </text>     
                 <text> data-user-id="@Model.ThisUser.Id" </text>       
                 <text> data-chat-messages='@Model.JsonChatMessages' </text>     

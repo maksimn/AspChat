@@ -1,13 +1,9 @@
 import React from "react";
 
-import getSocket from "../../webSocket";
+import socket from "../../webSocket";
 import styles from "./ChatMessageInputForm.css";
 
 export default class ChatMessageInputForm extends React.Component {
-    constructor() {
-        super();
-        this.socket=null;
-    }
     sendMessage(e) {
         if(e.key === 'Enter') {
             const textArea = e.target;
@@ -18,7 +14,7 @@ export default class ChatMessageInputForm extends React.Component {
                 ChatUserName: this.props.userName,
                 Text: messageText
             };
-            this.socket.send(JSON.stringify(chatMessage));
+            socket.send(JSON.stringify(chatMessage));
         }
     }
 
@@ -29,7 +25,6 @@ export default class ChatMessageInputForm extends React.Component {
     }
     
     render() {
-        this.socket = getSocket();
         return (
             <div className={ styles.chatMessageInput }>
                 <textarea onKeyPress={ this.sendMessage.bind(this) } 

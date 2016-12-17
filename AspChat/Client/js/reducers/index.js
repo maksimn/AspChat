@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
-const scriptElement = document.querySelector('script');      
+const scriptElement = document.querySelector('#main');      
 const jsonChatMessages = scriptElement.getAttribute('data-chat-messages');
 
 let initChatMessages = JSON.parse(jsonChatMessages);
@@ -15,8 +15,9 @@ initChatMessages = initChatMessages != null
         []
 ;
 
-let userName = scriptElement.getAttribute('data-userName');
+let userName = scriptElement.getAttribute('data-username');
 userName = userName == null ? "" : userName;
+console.log("userName=",userName);
 
 function userNameReducer(state=userName, action) {
     return state;
