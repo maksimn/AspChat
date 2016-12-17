@@ -9,7 +9,12 @@
 </head>
 <body>
     <div id="app"></div>
-    <script @if (this.User.Identity.IsAuthenticated) {
+    @if (User.Identity.IsAuthenticated) {
+        <script>
+            window.isAuth = true;
+        </script>
+    }
+    <script @if (User.Identity.IsAuthenticated) {
                 <text> data-username="@Model.ThisUser.Name" </text>     
                 <text> data-user-id="@Model.ThisUser.Id" </text>       
                 <text> data-chat-messages='@Model.JsonChatMessages' </text>     
