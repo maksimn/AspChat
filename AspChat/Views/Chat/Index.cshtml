@@ -1,5 +1,10 @@
 ﻿@model AspChat.ViewModels.ChatIndexViewModel
 
+@{
+    var isAuthCorrect = Model != null && Model.ThisUser != null && 
+                        Model.ThisUser.Name != null && User.Identity.IsAuthenticated;
+}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,11 +16,11 @@
     <div id="app"></div>
     <script>
         function isAuth() {
-            return @User.Identity.IsAuthenticated.ToString().ToLower();
+            return @isAuthCorrect.ToString().ToLower();
         }
     </script>
     <script id="main" 
-            @if (Model != null && Model.ThisUser != null && User.Identity.IsAuthenticated) {
+            @if (isAuthCorrect) {
                 <text> data-username="@Model.ThisUser.Name" </text>     
                 <text> data-user-id="@Model.ThisUser.Id" </text>       
                 <text> data-chat-messages='@Model.JsonChatMessages' </text>     

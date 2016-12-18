@@ -25,5 +25,9 @@ namespace AspChat.ViewModels {
             var compared = (ChatUserViewModel)obj;
             return compared.Id == this.Id && compared.Name == this.Name;
         }
+
+        public override int GetHashCode() {
+            return base.GetHashCode();
+        }
     }
 }
