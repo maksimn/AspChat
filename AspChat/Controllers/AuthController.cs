@@ -17,7 +17,7 @@ namespace AspChat.Controllers {
             return Redirect(result.RedirectUrl);
         }
 
-        public ActionResult Login(string chatUserName, string password) {
+        public ActionResult LogIn(string chatUserName, string password) {
             IChatData chatData = new StaticChatData();
             
             bool isAuth = chatData.AuthenticateUser(chatUserName, password);
@@ -29,6 +29,11 @@ namespace AspChat.Controllers {
                 TempData["message"] = "Неверное имя пользователя или пароль.";
                 return Redirect("#/login");
             }
+        }
+
+        public ActionResult LogOut() {
+            FormsAuthentication.SignOut();
+            return Redirect("/");
         }
     }
 }

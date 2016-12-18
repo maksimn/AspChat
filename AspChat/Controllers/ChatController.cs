@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
-using AspChat.Services;
+﻿using System.Web.Mvc;
 using AspChat.ViewModels;
 using AspChat.ChatData;
 
