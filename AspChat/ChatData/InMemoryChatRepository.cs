@@ -10,9 +10,5 @@ namespace AspChat.ChatData {
 
         public static List<ChatUser> ChatUsers { get; set; }
         public static List<ChatMessage> ChatMessages { get; set; }
-
-        public static int NumChatUsers {
-            get { return ChatUsers.Count; }
-        }
     }
 }

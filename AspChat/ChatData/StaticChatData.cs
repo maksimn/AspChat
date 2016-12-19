@@ -1,9 +1,48 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+
+using Newtonsoft.Json;
+
 using AspChat.Models;
 using AspChat.ViewModels;
 
 namespace AspChat.ChatData {
     public class StaticChatData : IChatData {
+        private static string dbFileName = AppDomain.CurrentDomain.BaseDirectory + "App_Data\\ChatFileDB.txt";
+
+        static StaticChatData() {
+            if(!File.Exists(dbFileName)) {
+                using (File.Create(dbFileName));
+            } else {
+                DeserializeFromFileIntoInMemoryChatRepository();
+            }
+            AppDomain.CurrentDomain.DomainUnload += SerializeInMemoryChatRepositoryIntoFile;
+        }
+
+        static void SerializeInMemoryChatRepositoryIntoFile(object sender, EventArgs e) {
+            var obj = new {
+                ChatUsers = InMemoryChatRepository.ChatUsers,
+                ChatMessages = InMemoryChatRepository.ChatMessages
+            };
+            string jsonOutput = JsonConvert.SerializeObject(obj);
+            File.WriteAllText(dbFileName, jsonOutput);
+        }
+
+        static void DeserializeFromFileIntoInMemoryChatRepository() {
+            if (!File.Exists(dbFileName)) {
+                return;
+            }
+            var jsonInput = File.ReadAllText(dbFileName);
+            var definition = new { 
+                ChatUsers = new List<ChatUser>(),
+                ChatMessages = new List<ChatMessage>()
+            };
+            var result = JsonConvert.DeserializeAnonymousType(jsonInput, definition);
+            InMemoryChatRepository.ChatUsers = result.ChatUsers;
+            InMemoryChatRepository.ChatMessages = result.ChatMessages;
+        }
+
         public void AddChatMessage(ChatMessage chatMessage) {
             InMemoryChatRepository.ChatMessages.Add(chatMessage);
         }

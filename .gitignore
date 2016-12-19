@@ -14,3 +14,5 @@ AspChat/Client/output/main.css
 
 AspChat.Tests/bin
 AspChat.Tests/obj
+
+AspChat/App_Data/ChatFileDB.txt
