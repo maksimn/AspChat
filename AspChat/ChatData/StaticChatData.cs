@@ -13,7 +13,7 @@ namespace AspChat.ChatData {
 
         static StaticChatData() {
             if(!File.Exists(dbFileName)) {
-                using (File.Create(dbFileName));
+                using (File.Create(dbFileName)) {};
             } else {
                 DeserializeFromFileIntoInMemoryChatRepository();
             }
