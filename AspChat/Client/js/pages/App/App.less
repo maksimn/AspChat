@@ -1,16 +1,15 @@
 @import "reset";
-
-@header-height: 41px;
+@import "../../values";
 
 body {
     font-family: Verdana, Geneva, sans-serif;
-    background-color: #edeef0;
+    background-color: @bodyBackground;
 }
 
 .header {
     position: relative;
     height: @header-height;
-    background-color: #507299;
+    background-color: @headerBackground;
 }
 
 .chatLabel {
@@ -20,7 +19,7 @@ body {
     margin-left: 200px;
     font-size: 16px;
     font-weight: 700;
-    color: #fff;
+    color: @headerTextColor;
     letter-spacing: 1px;
     transform: translateY(-50%);
 }
