@@ -30,11 +30,11 @@ export default class RegistrationForm extends React.Component {
                 <div className={styles.registerFormHeader}>Регистрация в чате</div>
                 <div className={styles.formField}>
                     <label>Имя:</label><br />
-                    <input type="text" name="chatUserName" required />
+                    <input type="text" name="chatUserName" maxLength="30" required />
                 </div>
                 <div className={styles.formField}>
                     <label>Пароль:</label><br />
-                    <input id="password" name="password" type="password" required />
+                    <input id="password" name="password" maxLength="20" type="password" required />
                 </div>
                 <div className={styles.formField}>
                     <label>Повторите пароль:</label><br />

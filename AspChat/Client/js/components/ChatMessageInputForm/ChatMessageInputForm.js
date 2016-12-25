@@ -30,6 +30,7 @@ export default class ChatMessageInputForm extends React.Component {
                 <textarea onKeyPress={ this.sendMessage.bind(this) } 
                           onKeyUp={ this.clearTextArea }
                           className={ styles.messageTextBox }
+                          maxLength="500"
                           placeholder="Напишите сообщение...">
                 </textarea>
             </div>
