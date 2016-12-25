@@ -1,4 +1,6 @@
-@import url("./reset.css");
+@import "reset";
+
+@header-height: 41px;
 
 body {
     font-family: Verdana, Geneva, sans-serif;
@@ -7,7 +9,7 @@ body {
 
 .header {
     position: relative;
-    height: 41px;
+    height: @header-height;
     background-color: #507299;
 }
 

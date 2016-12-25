@@ -29,6 +29,13 @@ module.exports = {
                       'style?sourceMap',
                       "css?modules&localIdentName=" + STYLE_NAME_TEMPLATE + "!postcss-loader"
                 )
+            },
+            {
+                test: /\.less$/,
+                loader: ExtractTextPlugin.extract(
+                      'style?sourceMap',
+                      "css?modules&localIdentName=" + STYLE_NAME_TEMPLATE + "!postcss-loader!less"
+                )
             }
         ]
     },
@@ -37,9 +44,9 @@ module.exports = {
         filename: "index.js"
     },
     plugins: debug ? 
-        [
+        [ 
             new ExtractTextPlugin(FILENAME_TEMPLATE + ".css", { allChunks: true })
-        ] 
+        ]
         : 
         [
             new webpack.optimize.DedupePlugin(),
