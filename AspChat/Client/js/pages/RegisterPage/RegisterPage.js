@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 
-import styles from "./RegisterPage.css";
+import styles from "./RegisterPage.less";
 import RegistrationForm from "../../components/RegistrationForm";
 
 export default class RegisterPage extends React.Component {

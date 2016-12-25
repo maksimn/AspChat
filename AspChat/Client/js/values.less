@@ -1,4 +1,34 @@
 @header-height: 41px;
+
 @bodyBackground: #edeef0;
 @headerBackground: #507299;
 @headerTextColor: #fff;
+@mainAreaBackground: #fff;
+
+@authAreaWidth: 300px;
+@authAreaMargin: 25px auto;
+
+.verticalCenterBlock {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.authArea {
+    width: @authAreaWidth;
+    margin: @authAreaMargin;
+    font-size: 14px;
+    background-color: @mainAreaBackground;
+}
+
+.backLinkWrap {
+    position: absolute;
+    top: 14px;
+    right: 0;
+    margin-right: 250px;
+    font-size: 13px;
+}
+
+.backLink {
+    color: @headerTextColor;
+}

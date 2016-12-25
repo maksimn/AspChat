@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import styles from "./StartPage.css"
+import styles from "./StartPage.less"
 
 export default class StartPage extends React.Component {
     render() {
