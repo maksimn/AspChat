@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import ChatMessageInputForm from "../../components/ChatMessageInputForm";
 import ChatMessagesListView from "../../components/ChatMessagesListView";
-import styles from "./ChatRoom.css";
+import styles from "./ChatRoom.less";
 
 export class ChatRoom extends React.Component {
     render() {

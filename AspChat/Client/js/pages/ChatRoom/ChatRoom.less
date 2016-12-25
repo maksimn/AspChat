@@ -1,10 +1,14 @@
+@import "../../values";
+
+@chatRoomBorderColor: #e3e4e8;
+
 .userSessionArea {
     position: absolute;
     top: 11px;
     right: 0;
     margin-right: 230px;
     font-size: 12px;
-    color: #fff;
+    color: @headerTextColor;
 }
 
 .userName {
@@ -12,7 +16,7 @@
     padding-right: 10px;
     margin-right: 10px;
     font-weight: 700;
-    border-right: 1px solid #fff;
+    border-right: 1px solid @headerTextColor;
 }
 
 .logOutForm {
@@ -22,14 +26,14 @@
 .chatRoom {
     position: relative;
     width: 550px;
-    height: calc(100vh - 41px - 15px - 15px);
+    height: calc(~"100vh - @{header-height} - 30px");
     margin: 15px auto 0;
-    background-color: #fff;
-    border: 1px solid #e3e4e8;
+    background-color: @mainAreaBackground;
+    border: 1px solid @chatRoomBorderColor;
     border-radius: 2px;
 }
 
 .chatRoomHeader {
     height: 46px;
-    border-bottom: 1px solid #e3e4e8;
+    border-bottom: 1px solid @chatRoomBorderColor;
 }
