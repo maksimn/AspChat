@@ -109,7 +109,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ChatMessage.cs" />
-    <Compile Include="ChatData\InMemoryChatRepository.cs" />
     <Compile Include="Models\ChatUser.cs" />
     <Compile Include="Services\AuthRegisterService.cs" />
     <Compile Include="ViewModels\ChatUserViewModel.cs" />

@@ -89,5 +89,15 @@ namespace AspChat.ChatData {
             }
             return null;
         }
+
+        private static class InMemoryChatRepository {
+            static InMemoryChatRepository() {
+                ChatUsers = new List<ChatUser>();
+                ChatMessages = new List<ChatMessage>();
+            }
+
+            public static List<ChatUser> ChatUsers { get; set; }
+            public static List<ChatMessage> ChatMessages { get; set; }
+        }
     }
 }
