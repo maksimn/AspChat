@@ -4,9 +4,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.WebSockets;
-using AspChat.ChatData;
 using AspChat.Models;
-using AspChat.ViewModels;
+using AspChat.ChatData;
 using AspChat.WebSockets;
 using Newtonsoft.Json;
 
@@ -19,11 +18,7 @@ namespace AspChat.Services {
             // Получаем сокет клиента из контекста запроса
             var socket = context.WebSocket;
 
-            var userName = context.User.Identity.Name;
-            var chatUserViewModel = _chatStorage.GetChatUserViewModelByName(userName);
-
-            var wsChatEntity = new WsChatEntity(socket, chatUserViewModel);
-            WsConnectionManager.AddWsChatEntity(wsChatEntity);
+            WsConnectionManager.AddWebSocket(socket);
 
             // Слушаем его
             while (socket.State == WebSocketState.Open) {               
@@ -41,7 +36,7 @@ namespace AspChat.Services {
             }
             // Если программа дошла сюда, значит, соединение закрылось
             // Удаляем сокет
-            WsConnectionManager.DeleteWsChatEntity(wsChatEntity);
+            WsConnectionManager.DeleteWebSocket(socket);
         }
 
         private string BufferMsgToString(ArraySegment<byte> buffer, int count) {

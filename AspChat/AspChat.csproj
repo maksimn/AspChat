@@ -112,7 +112,6 @@
     <Compile Include="Models\ChatUser.cs" />
     <Compile Include="Services\AuthRegisterService.cs" />
     <Compile Include="ViewModels\ChatUserViewModel.cs" />
-    <Compile Include="WebSockets\WsChatEntity.cs" />
     <Compile Include="WebSockets\WsConnectionManager.cs" />
     <Compile Include="ViewModels\ChatIndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

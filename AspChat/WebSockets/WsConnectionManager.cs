@@ -7,24 +7,23 @@ using System.Threading.Tasks;
 
 namespace AspChat.WebSockets {
     public static class WsConnectionManager {
-        private static List<WsChatEntity> _wsChatEntities = new List<WsChatEntity>();
+        private static List<WebSocket> _webSockets = new List<WebSocket>();
 
-        public static void AddWsChatEntity(WsChatEntity wsChatEntity) {
-            _wsChatEntities.Add(wsChatEntity);
+        public static void AddWebSocket(WebSocket ws) {
+            _webSockets.Add(ws);
         }
 
         public static async Task SendChatMessageToAll(string message) {
             var outputBuffer = new ArraySegment<byte>(Encoding.UTF8.GetBytes(message));
-            foreach (var wsChatEntity in _wsChatEntities) {
-                var client = wsChatEntity.WebSocket;
-                if (client.State == WebSocketState.Open) {                  
-                    await client.SendAsync(outputBuffer, WebSocketMessageType.Text, true, CancellationToken.None);
+            foreach (var webSocket in _webSockets) {
+                if (webSocket.State == WebSocketState.Open) {                  
+                    await webSocket.SendAsync(outputBuffer, WebSocketMessageType.Text, true, CancellationToken.None);
                 }
             }
         }
 
-        public static void DeleteWsChatEntity(WsChatEntity entity) {
-            _wsChatEntities.Remove(entity);
+        public static void DeleteWebSocket(WebSocket webSocket) {
+            _webSockets.Remove(webSocket);
         }
     }
 }
