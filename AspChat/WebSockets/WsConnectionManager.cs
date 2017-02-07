@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace AspChat.WebSockets {
     public static class WsConnectionManager {
+        private static readonly object _lock = new object();
         private static List<WebSocket> _webSockets = new List<WebSocket>();
 
         public static void AddWebSocket(WebSocket ws) {
+            Monitor.Enter(_lock);
             _webSockets.Add(ws);
+            Monitor.Exit(_lock);
         }
 
         public static async Task SendChatMessageToAll(string message) {
@@ -23,7 +26,9 @@ namespace AspChat.WebSockets {
         }
 
         public static void DeleteWebSocket(WebSocket webSocket) {
+            Monitor.Enter(_lock);
             _webSockets.Remove(webSocket);
+            Monitor.Exit(_lock);
         }
     }
 }
