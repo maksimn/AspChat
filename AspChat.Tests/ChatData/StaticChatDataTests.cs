@@ -32,22 +32,6 @@ namespace AspChat.Tests.ChatData {
 
             Assert.IsTrue(chatData.AuthenticateUser("Abc", "xxx"));
         }
-        [Test]
-        public void GetChatUserViewModelByName_NoUsers_ReturnNull() {
-            var viewModel = chatData.GetChatUserViewModelByName("Abc");
-
-            Assert.IsNull(viewModel);
-        }
-        [Test]
-        public void GetChatUserViewModelByName_TwoUsersInRepository_ReturnSecondAddedUserViewModel() {
-            chatData.AddChatUser(new ChatUser(0, "Abc", "1234"));
-            chatData.AddChatUser(new ChatUser(1, "Xyz", "4321"));
-
-            var viewModel = chatData.GetChatUserViewModelByName("Xyz");
-
-            var expected = new ChatUserViewModel(1, "Xyz");
-            Assert.AreEqual(expected, viewModel);
-        }
         [TearDown]
         public void ClearRepository() {
             chatData.ClearAllData();

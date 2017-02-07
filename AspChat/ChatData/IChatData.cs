@@ -10,8 +10,6 @@ namespace AspChat.ChatData {
 
         List<ChatMessage> ChatMessages { get; }
 
-        ChatUserViewModel GetChatUserViewModelByName(string username);
-
         int GetIdForNewUser();
 
         bool IsUserWithGivenNameExist(string userName);

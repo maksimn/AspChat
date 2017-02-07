@@ -7,8 +7,7 @@ namespace AspChat.Controllers {
         public ActionResult Index() {
             if (User.Identity.IsAuthenticated) {
                 IChatData chatData = new StaticChatData();
-                var chatUserVM = chatData.GetChatUserViewModelByName(this.User.Identity.Name);
-                var viewModel = new ChatIndexViewModel(chatUserVM, chatData.ChatMessages);
+                var viewModel = new ChatIndexViewModel(this.User.Identity.Name, chatData.ChatMessages);
                 return View(viewModel);
             }
             return View((ChatIndexViewModel)null);

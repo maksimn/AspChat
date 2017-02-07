@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 using Newtonsoft.Json;
 
@@ -9,7 +10,9 @@ using AspChat.ViewModels;
 
 namespace AspChat.ChatData {
     public class StaticChatData : IChatData {
-        private static string dbFileName = AppDomain.CurrentDomain.BaseDirectory + "App_Data\\ChatFileDB.txt";
+        private static string dbFileName = "D:\\PrevRabStol\\MyProgramming\\ASP.NET MVC\\AspChat\\AspChat\\App_Data\\ChatFileDB.txt";
+
+        private readonly object _lock = new object();
 
         static StaticChatData() {
             if(!File.Exists(dbFileName)) {
@@ -44,50 +47,57 @@ namespace AspChat.ChatData {
         }
 
         public void AddChatMessage(ChatMessage chatMessage) {
+            Monitor.Enter(_lock);
             InMemoryChatRepository.ChatMessages.Add(chatMessage);
+            Monitor.Exit(_lock);
         }
 
         public void AddChatUser(ChatUser chatUser) {
+            Monitor.Enter(_lock);
             InMemoryChatRepository.ChatUsers.Add(chatUser);
+            Monitor.Exit(_lock);
         }
 
         public List<ChatMessage> ChatMessages {
             get {
-                return InMemoryChatRepository.ChatMessages;
+                Monitor.Enter(_lock);
+                var chatMessages = InMemoryChatRepository.ChatMessages;
+                Monitor.Exit(_lock);
+                return chatMessages;
             }
         }
 
         public int GetIdForNewUser() {
             int newId = 0;
+            Monitor.Enter(_lock);
             while (InMemoryChatRepository.ChatUsers.Exists(chatUser => chatUser.Id == newId)) {
                 newId++;
             }
+            Monitor.Exit(_lock);
             return newId;
         }
 
 
         public bool IsUserWithGivenNameExist(string userName) {
-            return InMemoryChatRepository.ChatUsers.Exists(chatUser => chatUser.Name == userName);
+            Monitor.Enter(_lock);
+            var res = InMemoryChatRepository.ChatUsers.Exists(chatUser => chatUser.Name == userName);
+            Monitor.Exit(_lock);
+            return res;
         }
 
 
         public bool AuthenticateUser(string username, string password) {
-            return InMemoryChatRepository.ChatUsers.Exists(
+            Monitor.Enter(_lock);
+            bool isAuth = InMemoryChatRepository.ChatUsers.Exists(
                 chatUser => chatUser.Name == username && chatUser.Password == password
             );
+            Monitor.Exit(_lock);
+            return isAuth;
         }
 
         public void ClearAllData() {
             InMemoryChatRepository.ChatUsers = new List<ChatUser>();
             InMemoryChatRepository.ChatMessages = new List<ChatMessage>();
-        }
-
-        public ChatUserViewModel GetChatUserViewModelByName(string username) {
-            var chatUser = InMemoryChatRepository.ChatUsers.Find(u => u.Name == username);
-            if (chatUser != null) {
-                return new ChatUserViewModel(chatUser.Id, chatUser.Name);
-            }
-            return null;
         }
 
         private static class InMemoryChatRepository {

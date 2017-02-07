@@ -5,11 +5,11 @@ using Newtonsoft.Json;
 
 namespace AspChat.ViewModels {
     public class ChatIndexViewModel {
-        public ChatIndexViewModel(ChatUserViewModel user, List<ChatMessage> messages) {
-            ThisUser = user;
+        public ChatIndexViewModel(string userName, List<ChatMessage> messages) {
+            ThisUserName = userName;
             ChatMessages = messages;
         }
-        public ChatUserViewModel ThisUser { get; set; }
+        public string ThisUserName { get; set; }
         public List<ChatMessage> ChatMessages { get; set; }
         public string JsonChatMessages {
             get {
